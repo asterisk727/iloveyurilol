@@ -1,0 +1,31 @@
+{
+// General editor settings
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.astro": true,
+    "**/dist": true
+  },
+
+  // TailwindCSS IntelliSense
+  "tailwindCSS.includeLanguages": {
+    "astro": "html",
+    "svelte": "html",
+    "javascript": "javascript",
+    "typescript": "typescript"
+  },
+  "tailwindCSS.emmetCompletions": true,
+
+  // ESLint
+  "eslint.validate": ["astro", "javascript", "typescript"],
+
+  // Prettier
+  "prettier.enableDebugLogs": false,
+  "prettier.requireConfig": true,
+  "prettier.printWidth": 100,
+  "prettier.tabWidth": 2,
+  "prettier.singleQuote": true,
+  "prettier.semi": true
+}

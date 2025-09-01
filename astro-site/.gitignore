@@ -1,0 +1,7 @@
+# Astro-specific build artifacts (if not using global ignore)
+.astro/
+dist/
+
+# Environment variables specific to this project
+.env
+.env.production
