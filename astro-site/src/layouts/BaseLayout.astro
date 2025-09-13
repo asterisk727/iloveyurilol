@@ -6,7 +6,7 @@ interface Props {
   description?: string;
 }
 
-const { title = 'I LOVE YURI LOL', description = 'hello there' } = Astro.props;
+const { title = 'TESTTITLE', description = 'TESTDESCRIPTION' } = Astro.props;
 ---
 
 <!doctype html>
@@ -20,7 +20,7 @@ const { title = 'I LOVE YURI LOL', description = 'hello there' } = Astro.props;
     <title>{title}</title>
 
     <!-- Favicon -->
-    <link rel="icon" href="/favicon.svg" />
+    <!-- <link rel="icon" href="/favicon.svg" /> -->
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,7 +30,15 @@ const { title = 'I LOVE YURI LOL', description = 'hello there' } = Astro.props;
       rel="stylesheet"
     />
   </head>
-  <body class="bg-gray-50 font-sans text-gray-900">
-    <slot />
+  <body class="bg-gray-400 pt-32">
+    <main
+      class="w-4/5 lg:w-1/2 mx-auto lg:mx-0 lg:ml-[12%]
+    bg-slate-900 text-slate-200 rounded-2xl
+      transition-all duration-150 ease-in-out"
+    >
+      <slot />
+    </main>
   </body>
+
+  <footer></footer>
 </html>
