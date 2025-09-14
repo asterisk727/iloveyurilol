@@ -46,10 +46,9 @@ const { title = 'TESTTITLE', description = 'TESTDESCRIPTION' } = Astro.props;
 
     {/* TODO: min-h-[1000px] is temporary (ONLY FOR TESTING) i.e. TAKE IT OUT LATER thanks */}
     {/* i fucking hate having to do responsive design this is so janky */}
-    {/* i fucking hate having to do responsive design this is so janky */}
     <main
-      class="fixed w-[90%] min-[667px]:w-[600px] left-[200px] min-h-[1000px]
-      max-[999px]:left-[50%] max-[999px]:-translate-x-[50%]
+      class="w-[90%] h-auto min-h-[1000px] 
+      min-[667px]:w-[600px] max-[999px]:mx-auto ml-[200px]
       bg-slate-900 opacity-95 text-slate-200 rounded-2xl
       transition-all duration-150 ease-in-out"
     >
