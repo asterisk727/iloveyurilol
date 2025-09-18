@@ -4,7 +4,7 @@ export interface Props {
     title: string;
     svg: string;
     hex: string;
-    url: string;
+    url?: string;
     account?: string;
   };
 }
@@ -15,8 +15,8 @@ const { icon } = Astro.props;
 <li class="relative group">
   {/* stupid fucking workaround */}
   <a
-    href={icon.url}
-    class={'flex items-center justify-center w-10 h-10 transition-colors duration-150 fill-current group-hover:[color:var(--hover-color)]'}
+    href={icon.url ? icon.url : ''}
+    class={'flex items-center justify-center w-8 h-8 transition-colors duration-150 fill-current group-hover:[color:var(--hover-color)]'}
     style={`--hover-color: ${icon.hex}`}
   >
     <Fragment set:html={icon.svg} />

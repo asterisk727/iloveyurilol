@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FancyIcon from '@components/FancyIcon.astro';
+import IconRow from '@components/IconRow.astro';
 import FancySection from '@components/FancySection.astro';
 import * as si from 'simple-icons'; // TODO: TESTING PURPOSES ONLY!!!! DONT IMPORT 3000 SVGS PLS PLS PLS
 
@@ -8,13 +9,6 @@ const { title, description } = Astro.props;
 ---
 
 <BaseLayout>
-  <!-- find a better way to do this, maybe make sections a component -->
-  <style>
-    section {
-      padding-top: 20px;
-    }
-  </style>
-
   <div class="pl-4 pr-4 pb-4 relative">
     <header>
       <div class="flex items-start gap-4">
@@ -38,35 +32,66 @@ const { title, description } = Astro.props;
       </div>
     </header>
     <FancySection title="Links to things" id="links">
-      <div class="flex justify-center">
-        <ul class="flex flex-wrap flex-row gap-4">
-          <FancyIcon
-            icon={{
-              title: si.siDiscord.title,
-              svg: si.siDiscord.svg,
-              hex: '#' + si.siDiscord.hex.toLowerCase(),
-              url: si.siDiscord.source,
-              account: 'asterisk727',
-            }}
-          />
-          <FancyIcon
-            icon={{
-              title: si.siGithub.title,
-              svg: si.siGithub.svg,
-              hex: '#' + 'FFFFFF',
-              url: si.siGithub.source,
-              account: 'asterisk727',
-            }}
-          />
-          <!-- Todo: fill out the rest of these -->
-        </ul>
-      </div>
+      <IconRow>
+        <FancyIcon
+          icon={{
+            title: si.siDiscord.title,
+            svg: si.siDiscord.svg,
+            hex: '#' + si.siDiscord.hex.toLowerCase(),
+            url: si.siDiscord.source,
+            account: 'asterisk727',
+          }}
+        />
+        <FancyIcon
+          icon={{
+            title: si.siGithub.title,
+            svg: si.siGithub.svg,
+            hex: '#' + 'FFFFFF',
+            url: si.siGithub.source,
+            account: 'asterisk727',
+          }}
+        />
+        <!-- TODO: fill out the rest of these -->
+      </IconRow>
     </FancySection>
-    <section id="languages"></section>
-    <section id="projects"></section>
-    <section id="blog"></section>
-    <section id="buttons"></section>
-    <section id="testimonials"></section>
+    <FancySection title="10% knowledge of these:" id="languages">
+      <IconRow>
+        <FancyIcon
+          icon={{
+            title: si.siAstro.title,
+            svg: si.siAstro.svg,
+            hex: '#' + si.siAstro.hex.toLowerCase(),
+            url: si.siAstro.source,
+          }}
+        />
+        <!-- TODO: fill out the rest of these -->
+      </IconRow>
+    </FancySection>
+    <FancySection title="3% knowledge of these:" id="learning">
+      <IconRow>
+        <FancyIcon
+          icon={{
+            title: si.siKotlin.title,
+            svg: si.siKotlin.svg,
+            hex: '#' + si.siKotlin.hex.toLowerCase(),
+            url: si.siKotlin.source,
+          }}
+        />
+        <!-- TODO: fill out the rest of these -->
+      </IconRow>
+    </FancySection>
+    <FancySection title="Fun things I've done" id="projects">
+      <!-- something so that linter doesn't destroy the closing tag -->
+    </FancySection>
+    <FancySection title="Blog posts" id="blogposts">
+      <!-- something so that linter doesn't destroy the closing tag -->
+    </FancySection>
+    <FancySection title="clicky clicky buttons" id="buttons">
+      <!-- something so that linter doesn't destroy the closing tag -->
+    </FancySection>
+    <FancySection title="testimonials" id="testimonials">
+      <!-- something so that linter doesn't destroy the closing tag -->
+    </FancySection>
     <div class="pb-4"></div>
   </div>
 </BaseLayout>
