@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FancyIcon from '@components/FancyIcon.astro';
-import SectionTitle from '@components/SectionTitle.astro';
+import FancySection from '@components/FancySection.astro';
 import * as si from 'simple-icons'; // TODO: TESTING PURPOSES ONLY!!!! DONT IMPORT 3000 SVGS PLS PLS PLS
 
 const { title, description } = Astro.props;
@@ -15,10 +15,10 @@ const { title, description } = Astro.props;
     }
   </style>
 
-  <div class="pt-4 pl-4 pr-4 pb-4">
+  <div class="pl-4 pr-4 pb-4 relative">
     <header>
-      <div class="flex flex-wrap items-end gap-4">
-        <picture>
+      <div class="flex items-start gap-4">
+        <picture class="relative -mt-16 shrink-0">
           <source srcset="pfp.png" type="img/png" />
           <img
             src="pfp.png"
@@ -28,7 +28,7 @@ const { title, description } = Astro.props;
             alt="asterisk's profile picture"
           />
         </picture>
-        <hgroup>
+        <hgroup class="pt-4">
           <div class="flex items-baseline gap-4">
             <h1>Hi, I'm Asterisk.</h1>
             <h4>a.k.a. crxmsxn</h4>
@@ -37,9 +37,8 @@ const { title, description } = Astro.props;
         </hgroup>
       </div>
     </header>
-    <section id="links">
-      <SectionTitle title="Links to things" />
-      <div class="flex flex-wrap justify-center gap-4">
+    <FancySection title="Links to things" id="links">
+      <div class="flex justify-center">
         <ul class="flex flex-wrap flex-row gap-4">
           <FancyIcon
             icon={{
@@ -62,7 +61,7 @@ const { title, description } = Astro.props;
           <!-- Todo: fill out the rest of these -->
         </ul>
       </div>
-    </section>
+    </FancySection>
     <section id="languages"></section>
     <section id="projects"></section>
     <section id="blog"></section>
