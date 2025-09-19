@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FancyIcon from '@components/FancyIcon.astro';
 import IconRow from '@components/IconRow.astro';
+import Testimonial from '@components/Testimonial.astro';
 import FancySection from '@components/FancySection.astro';
 import * as si from 'simple-icons'; // TODO: TESTING PURPOSES ONLY!!!! DONT IMPORT 3000 SVGS PLS PLS PLS
 
@@ -90,7 +91,32 @@ const { title, description } = Astro.props;
       <!-- something so that linter doesn't destroy the closing tag -->
     </FancySection>
     <FancySection title="testimonials" id="testimonials">
-      <!-- something so that linter doesn't destroy the closing tag -->
+      <div class="grid grid-cols-1 gap-4">
+        <Testimonial
+          review={{
+            stars: 1,
+            author: 'sabrina',
+            content: 'can we kill this guy',
+          }}
+          ;
+        />
+        <Testimonial
+          review={{
+            stars: 1,
+            author: 'may',
+            content: "you want me to kill myself don't you",
+          }}
+          ;
+        />
+        <Testimonial
+          review={{
+            stars: 5,
+            author: 'laproliliu',
+            content: "don't die ... you are very cool",
+          }}
+          ;
+        />
+      </div>
     </FancySection>
     <div class="pb-4"></div>
   </div>

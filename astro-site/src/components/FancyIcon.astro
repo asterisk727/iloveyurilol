@@ -15,7 +15,7 @@ const { icon } = Astro.props;
 <li class="relative group">
   {/* stupid fucking workaround */}
   <a
-    href={icon.url ? icon.url : ''}
+    href={icon.url && icon.url}
     class={'flex items-center justify-center w-8 h-8 transition-colors duration-150 fill-current group-hover:[color:var(--hover-color)]'}
     style={`--hover-color: ${icon.hex}`}
   >
