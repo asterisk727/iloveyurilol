@@ -24,7 +24,7 @@ const { title, description } = Astro.props;
           />
         </picture>
         <hgroup class="pt-4">
-          <div class="flex items-baseline gap-4">
+          <div class="flex flex-wrap items-baseline gap-x-4">
             <h1>Hi, I'm Asterisk.</h1>
             <h4>a.k.a. crxmsxn</h4>
           </div>
@@ -38,7 +38,7 @@ const { title, description } = Astro.props;
           icon={{
             title: si.siDiscord.title,
             svg: si.siDiscord.svg,
-            hex: '#' + si.siDiscord.hex.toLowerCase(),
+            hex: '#' + si.siDiscord.hex,
             url: si.siDiscord.source,
             account: 'asterisk727',
           }}
@@ -61,7 +61,7 @@ const { title, description } = Astro.props;
           icon={{
             title: si.siAstro.title,
             svg: si.siAstro.svg,
-            hex: '#' + si.siAstro.hex.toLowerCase(),
+            hex: '#' + si.siAstro.hex,
             url: si.siAstro.source,
           }}
         />
@@ -74,7 +74,7 @@ const { title, description } = Astro.props;
           icon={{
             title: si.siKotlin.title,
             svg: si.siKotlin.svg,
-            hex: '#' + si.siKotlin.hex.toLowerCase(),
+            hex: '#' + si.siKotlin.hex,
             url: si.siKotlin.source,
           }}
         />

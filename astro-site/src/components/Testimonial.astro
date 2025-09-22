@@ -10,8 +10,7 @@ export interface Props {
 const { review } = Astro.props;
 ---
 
-<div class="p-4
-bg-slate-800 opacity-99 text-slate-100 rounded-2xl">
+<div class="p-4 bg-slate-800 text-slate-100 rounded-2xl">
   <span class="inline-flex gap-1">
     {
       Array.from({ length: review.stars }).map(() => (

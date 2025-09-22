@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { siAstro, siGithub, siCloudflareworkers } from 'simple-icons';
 
 interface Props {
   title?: string;
@@ -49,12 +50,46 @@ const { title = 'TESTTITLE', description = 'TESTDESCRIPTION' } = Astro.props;
     <main
       class="w-[90%] h-auto min-h-[1000px]
       min-[667px]:w-[600px] max-[999px]:mx-auto ml-[200px]
-      bg-slate-900 opacity-99 text-slate-200 rounded-2xl
+      bg-slate-900/95 text-slate-200 rounded-2xl
       transition-all duration-150 ease-in-out"
     >
       <slot />
+      <footer class="p-4 bg-slate-800 opacity-100 rounded-b-2xl">
+        <h3 class="text-slate-50">
+          <a href="https://iloveyuri.lol" class="no-underline uppercase">iloveyuri.lol</a>
+          - asterisk's funny little website
+        </h3>
+        <p class="text-slate-50">
+          Inspired by <a href="https://split.pet">split.pet</a>
+          <br />
+          Built with
+          <a
+            href={siAstro.source}
+            class={'inline-flex align-bottom w-5 h-5 fill-current'}
+            style={`color: ${'#' + siAstro.hex}`}
+          >
+            <Fragment set:html={siAstro.svg} />
+          </a>
+          <a href={siAstro.source} style=`color: ${'#' + siAstro.hex}`>Astro</a>
+          on
+          <a href={siGithub.source} class={'inline-flex align-middle w-5 h-5 fill-slate-300'}>
+            <Fragment set:html={siGithub.svg} />
+          </a>
+          <a href={siGithub.source} class="text-slate-300">Github</a>
+          and hosted with
+          <a
+            href={siCloudflareworkers.source}
+            class={'inline-flex align-middle w-5 h-5 fill-current'}
+            style={`color: ${'#' + siCloudflareworkers.hex}`}
+          >
+            <Fragment set:html={siCloudflareworkers.svg} />
+          </a>
+          <a href={siCloudflareworkers.source} style=`color: ${'#' + siCloudflareworkers.hex}`
+            >Cloudflare Workers</a
+          >
+          ❤️
+        </p>
+      </footer>
     </main>
   </body>
-
-  <footer></footer>
 </html>
