@@ -32,6 +32,16 @@ const { title = 'TESTTITLE', description = 'TESTDESCRIPTION' } = Astro.props;
     />
   </head>
   <body class="pt-32 pb-32">
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('a').forEach((a) => {
+          if (!a.hasAttribute('target')) {
+            a.setAttribute('target', '_blank');
+          }
+        });
+      });
+    </script>
+
     <video
       autoplay
       muted
@@ -45,11 +55,9 @@ const { title = 'TESTTITLE', description = 'TESTDESCRIPTION' } = Astro.props;
       <source src="/bg/bg-video.av1.webm" type="video/webm; codecs=av01" />
     </video>
 
-    {/* TODO: min-h-[1000px] is temporary (ONLY FOR TESTING) i.e. TAKE IT OUT LATER thanks */}
     {/* i fucking hate having to do responsive design this is so janky */}
     <main
-      class="w-[90%] h-auto min-h-[1000px]
-      min-[667px]:w-[600px] max-[999px]:mx-auto ml-[200px]
+      class="h-auto w-[90%] min-[667px]:w-[600px] max-[999px]:mx-auto ml-[200px]
       bg-slate-900/95 text-slate-200 rounded-2xl
       transition-all duration-150 ease-in-out"
     >
@@ -72,10 +80,10 @@ const { title = 'TESTTITLE', description = 'TESTDESCRIPTION' } = Astro.props;
           </a>
           <a href={siAstro.source} style=`color: ${'#' + siAstro.hex}`>Astro</a>
           on
-          <a href={siGithub.source} class={'inline-flex align-middle w-5 h-5 fill-slate-300'}>
+          <a href={siGithub.source} class={'inline-flex align-middle w-5 h-5 fill-slate-400'}>
             <Fragment set:html={siGithub.svg} />
           </a>
-          <a href={siGithub.source} class="text-slate-300">Github</a>
+          <a href={siGithub.source} class="text-slate-400">Github</a>
           and hosted with
           <a
             href={siCloudflareworkers.source}

@@ -20,3 +20,10 @@
     @apply underline;
   }
 }
+
+#akasha-icon {
+  transform: rotate(-30deg);
+  transform-origin: center;
+  width: 32px;
+  height: 32px;
+}
