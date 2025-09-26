@@ -49,75 +49,75 @@ const { title, description } = Astro.props;
         <FancyIcon
           icon={{
             title: siDiscord.title,
-            svg: siDiscord.svg,
             hex: '#' + siDiscord.hex,
             url: 'https://discord.com/users/616792599360962583',
             account: 'asterisk727',
           }}
-        />
+        >
+          <Fragment set:html={siDiscord.svg} />
+        </FancyIcon>
         <FancyIcon
           icon={{
             title: siGithub.title,
-            svg: siGithub.svg,
             hex: colors.slate[400],
             url: 'https://github.com/asterisk727',
             account: 'asterisk727',
           }}
-        />
+        >
+          <Fragment set:html={siGithub.svg} />
+        </FancyIcon>
         <FancyIcon
           icon={{
             title: siLastdotfm.title,
-            svg: siLastdotfm.svg,
             hex: '#' + siLastdotfm.hex,
             url: 'https://www.last.fm/user/crxmsxn',
             account: 'crxmsxn',
           }}
-        />
+        >
+          <Fragment set:html={siLastdotfm.svg} />
+        </FancyIcon>
         <FancyIcon
           icon={{
             title: 'Akasha Network',
-            svg: akashaIcon,
             hex: '#395b64',
             url: 'https://akasha.cv/profile/824368720',
             account: 'Asterisk',
-            svgID: 'akasha-icon',
+            styleID: 'akasha-icon',
           }}
-        />
-        <!-- This is such a stupid workaround, think of a better way to do it please -->
-        <li class="relative group">
-          <a
-            href="https://aquadx.net/u/crxmsxn"
-            class="flex items-center justify-center w-8 h-8 transition-color duration-200 grayscale brightness-200 hover:grayscale-0 hover:brightness-100"
-          >
-            <img src="icons/aquadx.png" />
-          </a>
-          <span
-            class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2
-          px-2 py-1 rounded-md text-sm text-white bg-slate-800
-          opacity-0 group-hover:opacity-100 group-focus-within:opacity-100
-          transition-opacity duration-200 pointer-events-none whitespace-nowrap"
-          >
-            AquaDX - crxmsxn
-          </span>
-        </li>
+        >
+          <Fragment set:html={akashaIcon} />
+        </FancyIcon>
+        <FancyIcon
+          icon={{
+            title: 'AquaDX',
+            hex: '#ffffff',
+            url: 'https://aquadx.net/u/crxmsxn',
+            account: 'crxmsxn',
+            styleID: 'aquadx-icon',
+          }}
+        >
+          <img src="icons/aquadx.png" />
+        </FancyIcon>
         <FancyIcon
           icon={{
             title: siSteam.title,
-            svg: siSteam.svg,
             hex: '#1a9fff',
             url: 'https://steamcommunity.com/id/_asterisk_/',
             account: 'crxmsxn',
           }}
-        />
+        >
+          <Fragment set:html={siSteam.svg} />
+        </FancyIcon>
         <FancyIcon
           icon={{
             title: siMonkeytype.title,
-            svg: siMonkeytype.svg,
             hex: '#' + siMonkeytype.hex,
             url: 'https://monkeytype.com/profile/asterai',
             account: 'asterai',
           }}
-        />
+        >
+          <Fragment set:html={siMonkeytype.svg} />
+        </FancyIcon>
         <!-- TODO: fill out the rest of these -->
       </IconRow>
     </FancySection>
@@ -126,11 +126,11 @@ const { title, description } = Astro.props;
         <FancyIcon
           icon={{
             title: siAstro.title,
-            svg: siAstro.svg,
             hex: '#' + siAstro.hex,
-            url: siAstro.source,
           }}
-        />
+        >
+          <Fragment set:html={siAstro.svg} />
+        </FancyIcon>
         <!-- TODO: fill out the rest of these -->
       </IconRow>
     </FancySection>
@@ -139,11 +139,11 @@ const { title, description } = Astro.props;
         <FancyIcon
           icon={{
             title: siKotlin.title,
-            svg: siKotlin.svg,
             hex: '#' + siKotlin.hex,
-            url: siKotlin.source,
           }}
-        />
+        >
+          <Fragment set:html={siKotlin.svg} />
+        </FancyIcon>
         <!-- TODO: fill out the rest of these -->
       </IconRow>
     </FancySection>

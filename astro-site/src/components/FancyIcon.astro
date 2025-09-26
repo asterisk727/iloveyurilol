@@ -2,11 +2,10 @@
 export interface Props {
   icon: {
     title: string;
-    svg: string;
-    hex: string;
+    hex?: string;
     url?: string;
     account?: string;
-    svgID?: string;
+    styleID?: string;
   };
 }
 
@@ -18,10 +17,10 @@ const { icon } = Astro.props;
   <a
     href={icon.url && icon.url}
     class={'flex items-center justify-center w-8 h-8 transition-colors duration-200 fill-current group-hover:[color:var(--hover-color)]'}
-    style={`--hover-color: ${icon.hex}`}
-    id={icon.svgID && icon.svgID}
+    style={icon.hex && `--hover-color: ${icon.hex}`}
+    id={icon.styleID && icon.styleID}
   >
-    <Fragment set:html={icon.svg} />
+    <slot />
   </a>
 
   <span
