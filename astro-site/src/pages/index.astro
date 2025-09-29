@@ -74,74 +74,59 @@ const { title, description } = Astro.props;
     <FancySection title="Links to things" id="links">
       <IconRow>
         <FancyIcon
-          icon={{
-            title: siDiscord.title,
-            hex: '#' + siDiscord.hex,
-            url: 'https://discord.com/users/616792599360962583',
-            account: 'asterisk727',
-          }}
+          title={siDiscord.title}
+          hex={'#' + siDiscord.hex}
+          url={'https://discord.com/users/616792599360962583'}
+          account={'asterisk727'}
         >
           <Fragment set:html={siDiscord.svg} />
         </FancyIcon>
         <FancyIcon
-          icon={{
-            title: siGithub.title,
-            hex: '#f0f6fc',
-            url: 'https://github.com/asterisk727',
-            account: 'asterisk727',
-          }}
+          title={siGithub.title}
+          hex={'#f0f6fc'}
+          url={'https://github.com/asterisk727'}
+          account={'asterisk727'}
         >
           <Fragment set:html={siGithub.svg} />
         </FancyIcon>
         <FancyIcon
-          icon={{
-            title: siLastdotfm.title,
-            hex: '#' + siLastdotfm.hex,
-            url: 'https://www.last.fm/user/crxmsxn',
-            account: 'crxmsxn',
-          }}
+          title={siLastdotfm.title}
+          hex={'#' + siLastdotfm.hex}
+          url={'https://www.last.fm/user/crxmsxn'}
+          account={'crxmsxn'}
         >
           <Fragment set:html={siLastdotfm.svg} />
         </FancyIcon>
         <FancyIcon
-          icon={{
-            title: 'Akasha Network',
-            hex: '#395b64',
-            url: 'https://akasha.cv/profile/824368720',
-            account: 'Asterisk',
-            styleID: 'akasha-icon',
-          }}
+          title={'Akasha Network'}
+          hex={'#395b64'}
+          url={'https://akasha.cv/profile/824368720'}
+          account={'Asterisk'}
+          styleID={'akasha-icon'}
         >
           <Fragment set:html={akashaIcon} />
         </FancyIcon>
         <FancyIcon
-          icon={{
-            title: 'AquaDX',
-            hex: '#ffffff',
-            url: 'https://aquadx.net/u/crxmsxn',
-            account: 'crxmsxn',
-            styleID: 'aquadx-icon',
-          }}
+          title={'AquaDX'}
+          url={'https://aquadx.net/u/crxmsxn'}
+          account={'crxmsxn'}
+          styleID={'aquadx-icon'}
         >
           <img src="icons/aquadx.png" />
         </FancyIcon>
         <FancyIcon
-          icon={{
-            title: siSteam.title,
-            hex: '#1a9fff',
-            url: 'https://steamcommunity.com/id/_asterisk_/',
-            account: 'crxmsxn',
-          }}
+          title={siSteam.title}
+          hex={'#1a9fff'}
+          url={'https://steamcommunity.com/id/_asterisk_/'}
+          account={'crxmsxn'}
         >
           <Fragment set:html={siSteam.svg} />
         </FancyIcon>
         <FancyIcon
-          icon={{
-            title: siMonkeytype.title,
-            hex: '#' + siMonkeytype.hex,
-            url: 'https://monkeytype.com/profile/asterai',
-            account: 'asterai',
-          }}
+          title={siMonkeytype.title}
+          hex={'#' + siMonkeytype.hex}
+          url={'https://monkeytype.com/profile/asterai'}
+          account={'asterai'}
         >
           <Fragment set:html={siMonkeytype.svg} />
         </FancyIcon>
@@ -151,12 +136,7 @@ const { title, description } = Astro.props;
       <IconRow>
         {
           languagesList.map(({ icon, hex }) => (
-            <FancyIcon
-              icon={{
-                title: icon.title,
-                hex: hex ? hex : '#' + icon.hex,
-              }}
-            >
+            <FancyIcon title={icon.title} hex={hex ? hex : '#' + icon.hex}>
               <Fragment set:html={icon.svg} />
             </FancyIcon>
           ))
@@ -167,12 +147,7 @@ const { title, description } = Astro.props;
       <IconRow>
         {
           learningList.map(({ icon, hex }) => (
-            <FancyIcon
-              icon={{
-                title: icon.title,
-                hex: hex ? hex : '#' + icon.hex,
-              }}
-            >
+            <FancyIcon title={icon.title} hex={hex ? hex : '#' + icon.hex}>
               <Fragment set:html={icon.svg} />
             </FancyIcon>
           ))
@@ -186,7 +161,7 @@ const { title, description } = Astro.props;
       <!-- something so that linter doesn't destroy the closing tag -->
     </FancySection>
     <FancySection title="clicky clicky buttons" id="buttons">
-      <!-- something so that linter doesn't destroy the closing tag -->
+      <div class="grid grid-cols-4 gap 4"></div>
     </FancySection>
     <FancySection title="testimonials" id="testimonials">
       <div class="grid grid-cols-1 gap-4">

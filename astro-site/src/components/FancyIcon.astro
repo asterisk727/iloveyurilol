@@ -1,24 +1,22 @@
 ---
 export interface Props {
-  icon: {
-    title: string;
-    hex?: string;
-    url?: string;
-    account?: string;
-    styleID?: string;
-  };
+  title: string;
+  hex?: string;
+  url?: string;
+  account?: string;
+  styleID?: string;
 }
 
-const { icon } = Astro.props;
+const { title, hex, url, account, styleID } = Astro.props;
 ---
 
 <li class="relative group">
   {/* stupid fucking workaround */}
   <a
-    href={icon.url && icon.url}
+    href={url && url}
     class={'flex items-center justify-center w-8 h-8 transition-all duration-200 fill-current group-hover:[color:var(--hover-color)]'}
-    style={icon.hex && `--hover-color: ${icon.hex}`}
-    id={icon.styleID && icon.styleID}
+    style={hex && `--hover-color: ${hex}`}
+    id={styleID && styleID}
   >
     <slot />
   </a>
@@ -29,6 +27,6 @@ const { icon } = Astro.props;
           opacity-0 group-hover:opacity-100 group-focus-within:opacity-100
           transition-opacity duration-200 pointer-events-none whitespace-nowrap"
   >
-    {icon.title}{icon.account && ` - ${icon.account}`}
+    {title}{account && ` - ${account}`}
   </span>
 </li>
