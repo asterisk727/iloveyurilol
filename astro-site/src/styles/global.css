@@ -29,5 +29,5 @@
 }
 
 #aquadx-icon {
-  @apply duration-200 grayscale brightness-200 hover:grayscale-0 hover:brightness-100
+  @apply grayscale brightness-200 hover:grayscale-0 hover:brightness-100
 }

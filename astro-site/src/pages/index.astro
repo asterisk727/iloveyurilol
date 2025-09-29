@@ -14,9 +14,36 @@ import {
   siSteam,
   siMonkeytype,
   siAstro,
+  siSvelte,
+  siJavascript,
+  siTypescript,
+  siCplusplus,
+  siSqlite,
+  siGit,
+  siBun,
+  siNodedotjs,
   siKotlin,
+  siRust,
+  siPython,
 } from 'simple-icons';
 import akashaIcon from '../icons/akasha.svg?raw';
+
+const languagesList = [
+  { icon: siJavascript },
+  { icon: siTypescript },
+  { icon: siCplusplus },
+  { icon: siSqlite, hex: '#5cb2e4' },
+  { icon: siAstro },
+  { icon: siSvelte },
+  { icon: siGit },
+];
+const learningList = [
+  { icon: siKotlin },
+  { icon: siRust, hex: '#ffc832' },
+  { icon: siPython },
+  { icon: siBun, hex: '#fbf0df' },
+  { icon: siNodedotjs },
+];
 
 const { title, description } = Astro.props;
 ---
@@ -59,7 +86,7 @@ const { title, description } = Astro.props;
         <FancyIcon
           icon={{
             title: siGithub.title,
-            hex: colors.slate[400],
+            hex: '#f0f6fc',
             url: 'https://github.com/asterisk727',
             account: 'asterisk727',
           }}
@@ -118,33 +145,38 @@ const { title, description } = Astro.props;
         >
           <Fragment set:html={siMonkeytype.svg} />
         </FancyIcon>
-        <!-- TODO: fill out the rest of these -->
       </IconRow>
     </FancySection>
     <FancySection title="10% knowledge of these:" id="languages">
       <IconRow>
-        <FancyIcon
-          icon={{
-            title: siAstro.title,
-            hex: '#' + siAstro.hex,
-          }}
-        >
-          <Fragment set:html={siAstro.svg} />
-        </FancyIcon>
-        <!-- TODO: fill out the rest of these -->
+        {
+          languagesList.map(({ icon, hex }) => (
+            <FancyIcon
+              icon={{
+                title: icon.title,
+                hex: hex ? hex : '#' + icon.hex,
+              }}
+            >
+              <Fragment set:html={icon.svg} />
+            </FancyIcon>
+          ))
+        }
       </IconRow>
     </FancySection>
-    <FancySection title="3% knowledge of these:" id="learning">
+    <FancySection title="3% knowledge of these:" subtitle="(or want to learn)" id="learning">
       <IconRow>
-        <FancyIcon
-          icon={{
-            title: siKotlin.title,
-            hex: '#' + siKotlin.hex,
-          }}
-        >
-          <Fragment set:html={siKotlin.svg} />
-        </FancyIcon>
-        <!-- TODO: fill out the rest of these -->
+        {
+          learningList.map(({ icon, hex }) => (
+            <FancyIcon
+              icon={{
+                title: icon.title,
+                hex: hex ? hex : '#' + icon.hex,
+              }}
+            >
+              <Fragment set:html={icon.svg} />
+            </FancyIcon>
+          ))
+        }
       </IconRow>
     </FancySection>
     <FancySection title="Fun things I've done" id="projects">
