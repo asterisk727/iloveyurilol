@@ -1,7 +1,6 @@
 ---
 interface ButtonMeta {
   title: string;
-  alt: string;
   href: string;
 }
 
@@ -36,7 +35,6 @@ for (const [path, src] of Object.entries(imageImports)) {
 const buttons: Button[] = Object.entries(groupedImages).map(([base, formats]) => {
   const meta = metaImports[`/src/assets/buttons/${base}.json`] ?? {
     title: '',
-    alt: '',
     href: '#',
   };
   return { formats, ...meta };
@@ -44,7 +42,7 @@ const buttons: Button[] = Object.entries(groupedImages).map(([base, formats]) =>
 ---
 
 {
-  buttons.map(({ formats, alt, href, title }) => (
+  buttons.map(({ formats, href, title }) => (
     <a href={href} title={title}>
       {Object.keys(formats).length > 1 ? (
         <picture>
@@ -52,10 +50,10 @@ const buttons: Button[] = Object.entries(groupedImages).map(([base, formats]) =>
           {formats.webp && <source srcset={formats.webp} type="image/webp" />}
           {/* probably won't ever use png but just in case */}
           {formats.png && <source srcset={formats.png} type="image/png" />}
-          <img src={formats.gif ?? formats.webp ?? formats.png} alt={alt} width="88" height="31" />
+          <img src={formats.gif ?? formats.webp ?? formats.png} alt={title} width="88" height="31" />
         </picture>
       ) : (
-        <img src={Object.values(formats)[0]} alt={alt} width="88" height="31" />
+        <img src={Object.values(formats)[0]} alt={title} width="88" height="31" />
       )}
     </a>
   ))
