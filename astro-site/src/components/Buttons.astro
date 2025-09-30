@@ -1,0 +1,62 @@
+---
+interface ButtonMeta {
+  title: string;
+  alt: string;
+  href: string;
+}
+
+type Button = { formats: Record<string, string> } & ButtonMeta;
+
+const imageImports = import.meta.glob('/src/assets/buttons/*.{gif,webp,png}', {
+  eager: true,
+  import: 'default',
+}) as Record<string, string>;
+const metaImports = import.meta.glob('/src/assets/buttons/*.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, ButtonMeta>;
+
+function getBaseName(path: string) {
+  const fileName = path.split('/').pop() ?? '';
+  return fileName.split('.')[0];
+}
+
+function getExtention(path: string) {
+  return (path.split('.').pop() ?? '').toLowerCase();
+}
+
+const groupedImages: Record<string, Record<string, string>> = {};
+for (const [path, src] of Object.entries(imageImports)) {
+  const base = getBaseName(path);
+  const ext = getExtention(path);
+  groupedImages[base] ??= {};
+  groupedImages[base][ext] = src;
+}
+
+const buttons: Button[] = Object.entries(groupedImages).map(([base, formats]) => {
+  const meta = metaImports[`/src/assets/buttons/${base}.json`] ?? {
+    title: '',
+    alt: '',
+    href: '#',
+  };
+  return { formats, ...meta };
+});
+---
+
+{
+  buttons.map(({ formats, alt, href, title }) => (
+    <a href={href} title={title}>
+      {Object.keys(formats).length > 1 ? (
+        <picture>
+          {formats.gif && <source srcset={formats.gif} type="image/gif" />}
+          {formats.webp && <source srcset={formats.webp} type="image/webp" />}
+          {/* probably won't ever use png but just in case */}
+          {formats.png && <source srcset={formats.png} type="image/png" />}
+          <img src={formats.gif ?? formats.webp ?? formats.png} alt={alt} width="88" height="31" />
+        </picture>
+      ) : (
+        <img src={Object.values(formats)[0]} alt={alt} width="88" height="31" />
+      )}
+    </a>
+  ))
+}

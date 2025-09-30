@@ -4,6 +4,7 @@ import colors from 'tailwindcss/colors';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FancyIcon from '@components/FancyIcon.astro';
 import IconRow from '@components/IconRow.astro';
+import Buttons from '@components/Buttons.astro';
 import Testimonial from '@components/Testimonial.astro';
 import FancySection from '@components/FancySection.astro';
 
@@ -26,7 +27,7 @@ import {
   siRust,
   siPython,
 } from 'simple-icons';
-import akashaIcon from '../icons/akasha.svg?raw';
+import akashaIcon from '../assets/icons/akasha.svg?raw';
 
 const languagesList = [
   { icon: siJavascript },
@@ -161,7 +162,9 @@ const { title, description } = Astro.props;
       <!-- something so that linter doesn't destroy the closing tag -->
     </FancySection>
     <FancySection title="clicky clicky buttons" id="buttons">
-      <div class="grid grid-cols-4 gap 4"></div>
+      <div class="grid grid-cols-4 gap 4">
+        <Buttons />
+      </div>
     </FancySection>
     <FancySection title="testimonials" id="testimonials">
       <div class="grid grid-cols-1 gap-4">
