@@ -162,8 +162,10 @@ const { title, description } = Astro.props;
       <!-- something so that linter doesn't destroy the closing tag -->
     </FancySection>
     <FancySection title="clicky clicky buttons" id="buttons">
-      <div class="grid grid-cols-4 gap-4 px-16">
-        <Buttons />
+      <div class="mx-auto min-[667px]:w-[80%]">
+        <div class="grid grid-cols-3 min-[667px]:grid-cols-4 gap-4">
+          <Buttons />
+        </div>
       </div>
     </FancySection>
     <FancySection title="testimonials" id="testimonials">
@@ -171,7 +173,7 @@ const { title, description } = Astro.props;
         <Testimonial
           review={{
             stars: 1,
-            author: 'sabrina',
+            author: 'sabrina 🥝',
             content: 'can we kill this guy',
           }}
           ;
@@ -179,8 +181,16 @@ const { title, description } = Astro.props;
         <Testimonial
           review={{
             stars: 1,
-            author: 'may',
+            author: 'MaymayDX',
             content: "you want me to kill myself don't you",
+          }}
+          ;
+        />
+        <Testimonial
+          review={{
+            stars: 2,
+            author: 'Entrine',
+            content: '[asterisk is] a walking ragebaiter ... master baiter',
           }}
           ;
         />

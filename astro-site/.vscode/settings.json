@@ -1,8 +1,8 @@
 {
   "json.schemas": [
     {
-      "fileMatch": ["src/assets/buttons/*.json"],
-      "url": "./src/assets/buttons/button.schema.json"
+      "fileMatch": ["public/buttons/*.json"],
+      "url": "./public/buttons/button.schema.json"
     }
   ]
 }
