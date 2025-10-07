@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.6",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.5",
     "simple-icons": "^15.14.0",
