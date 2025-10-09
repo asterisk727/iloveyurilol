@@ -164,10 +164,13 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
       <!-- something so that linter doesn't destroy the closing tag -->
     </FancySection>
     <FancySection title="Blog posts" id="blog-posts">
+      {posts.slice(0, 3).map((post) => <BlogPostDisplay post={post} />)}
       {
-        posts.slice(0, 3).map((post) => {
-          <BlogPostDisplay post={post} />;
-        })
+        posts.length > 3 && (
+          <a href="/blog" class="block w-fit ml-auto italic">
+            see more posts &gt
+          </a>
+        )
       }
     </FancySection>
     <FancySection title="clicky clicky buttons" id="buttons">

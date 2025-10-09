@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 @layer base {
+  * {
+    @apply underline-offset-2;
+  }
+
   h1 {
     @apply text-2xl font-bold text-slate-100;
   }
@@ -17,7 +21,7 @@
     @apply text-base leading-relaxed text-slate-300;
   }
   a {
-    @apply underline;
+    @apply underline transition-colors duration-150 text-slate-300 hover:text-slate-100;
   }
 }
 
