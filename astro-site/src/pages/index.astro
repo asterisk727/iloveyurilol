@@ -160,22 +160,13 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
         }
       </IconRow>
     </FancySection>
-    <FancySection title="Fun things I've done" id="projects">
-      <!-- something so that linter doesn't destroy the closing tag -->
-    </FancySection>
     <FancySection title="Blog posts" id="blog-posts">
       {posts.slice(0, 3).map((post) => <BlogPostDisplay post={post} />)}
-      {
-        posts.length > 3 && (
-          <a href="/blog" class="block w-fit ml-auto italic">
-            see more posts &gt
-          </a>
-        )
-      }
+      <a href="/blog" class="block w-fit ml-auto italic pt-2"> see all posts &gt </a>
     </FancySection>
     <FancySection title="clicky clicky buttons" id="buttons">
-      <div class="mx-auto min-[667px]:w-[80%]">
-        <div class="grid grid-cols-3 min-[667px]:grid-cols-4 gap-4">
+      <div class="mx-auto min-[550px]:w-[80%]">
+        <div class="grid grid-cols-3 min-[550px]:grid-cols-4 gap-4">
           <Buttons />
         </div>
       </div>
@@ -202,7 +193,7 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
           review={{
             stars: 2,
             author: 'Entrine',
-            content: '[asterisk is] a walking ragebaiter ... master baiter',
+            content: '[this guy is] a walking ragebaiter ... master baiter',
           }}
           ;
         />

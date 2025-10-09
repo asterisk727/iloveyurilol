@@ -11,6 +11,10 @@ const { frontmatter } = Astro.props;
         <h3>{frontmatter.description && frontmatter.description}</h3>
         <h4>{frontmatter.date}</h4>
       </hgroup>
+      <div class="flex gap-4 pb-4">
+        <a href="/"> &lt go home </a>
+        <a href="/blog"> &lt see all blog posts </a>
+      </div>
     </header>
 
     <slot />
