@@ -9,6 +9,8 @@ import Testimonial from '@components/Testimonial.astro';
 import FancySection from '@components/FancySection.astro';
 import BlogPostDisplay from '@components/BlogPostDisplay.astro';
 
+import type { PostFrontmatter } from 'lib/shared-types';
+
 import {
   siDiscord,
   siGithub,
@@ -48,12 +50,6 @@ const learningList = [
 ];
 
 const { title, description } = Astro.props;
-
-interface PostFrontmatter {
-  title: string;
-  description?: string;
-  date: string;
-}
 
 const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
 ---

@@ -3,11 +3,7 @@ import BaseLayout from 'layouts/BaseLayout.astro';
 import BlogPostDisplay from '@components/BlogPostDisplay.astro';
 import FancySection from '@components/FancySection.astro';
 
-interface PostFrontmatter {
-  title: string;
-  description?: string;
-  date: string;
-}
+import type { PostFrontmatter } from 'lib/shared-types';
 
 const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
 ---
