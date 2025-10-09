@@ -2,7 +2,9 @@
 const { post } = Astro.props;
 ---
 
-<div class="p-4 bg-slate-800 text-slate-100 rounded-2xl">
+<div
+  class="p-4 bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-2xl border-2 border-slate-800 hover:border-slate-300 transition-all duration-200"
+>
   <a href={post.url} class="no-underline">
     <h2>{post.frontmatter.title}</h2>
     <h3>{post.frontmatter.description}</h3>
