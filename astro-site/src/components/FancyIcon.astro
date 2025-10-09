@@ -14,7 +14,7 @@ const { title, hex, url, account, styleID } = Astro.props;
   {/* stupid fucking workaround */}
   <a
     href={url && url}
-    class={'flex items-center justify-center w-8 h-8 transition-all duration-200 fill-current group-hover:[color:var(--hover-color)]'}
+    class={'flex items-center justify-center w-7 h-7 transition-all duration-200 fill-current group-hover:[color:var(--hover-color)]'}
     style={hex && `--hover-color: ${hex}`}
     id={styleID && styleID}
   >
