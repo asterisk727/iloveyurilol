@@ -31,7 +31,7 @@ const { title = 'TESTTITLE', description = 'TESTDESCRIPTION' } = Astro.props;
       rel="stylesheet"
     />
   </head>
-  <body class="pt-32 pb-32">
+  <body class="pt-32 min-[600px]:pb-32 transition-all duration-200">
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         const host = window.location.hostname;
@@ -70,7 +70,9 @@ const { title = 'TESTTITLE', description = 'TESTDESCRIPTION' } = Astro.props;
 
       <footer class="p-4 bg-slate-800 opacity-100 rounded-b-2xl">
         <h3 class="text-slate-50">
-          <a href="https://iloveyuri.lol" class="no-underline uppercase">iloveyuri.lol</a>
+          <a href="https://iloveyuri.lol" class="text-slate-50 no-underline uppercase"
+            >iloveyuri.lol</a
+          >
           - asterisk's funny little website
         </h3>
         <p class="text-slate-50">
@@ -78,27 +80,30 @@ const { title = 'TESTTITLE', description = 'TESTDESCRIPTION' } = Astro.props;
           <br />
           Built with
           <a
-            href={siAstro.source}
+            href="https://astro.build"
             class={'inline-flex align-bottom w-5 h-5 fill-current'}
             style={`color: ${'#' + siAstro.hex}`}
           >
             <Fragment set:html={siAstro.svg} />
           </a>
-          <a href={siAstro.source} style=`color: ${'#' + siAstro.hex}`>Astro</a>
+          <a href="https://astro.build" style=`color: ${'#' + siAstro.hex}`>Astro</a>
           on
-          <a href={siGithub.source} class={'inline-flex align-middle w-5 h-5 fill-slate-400'}>
+          <a
+            href="https://github.com/asterisk727/iloveyurilol"
+            class={'inline-flex align-middle w-5 h-5 fill-slate-400'}
+          >
             <Fragment set:html={siGithub.svg} />
           </a>
-          <a href={siGithub.source} class="text-slate-400">Github</a>
+          <a href="https://github.com/asterisk727/iloveyurilol" class="text-slate-400">Github</a>
           and hosted with
           <a
-            href={siCloudflareworkers.source}
+            href="https://workers.cloudflare.com"
             class={'inline-flex align-middle w-5 h-5 fill-current'}
             style={`color: ${'#' + siCloudflareworkers.hex}`}
           >
             <Fragment set:html={siCloudflareworkers.svg} />
           </a>
-          <a href={siCloudflareworkers.source} style=`color: ${'#' + siCloudflareworkers.hex}`
+          <a href="https://workers.cloudflare.com" style=`color: ${'#' + siCloudflareworkers.hex}`
             >Cloudflare Workers</a
           >
           ❤️
