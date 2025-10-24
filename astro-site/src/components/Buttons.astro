@@ -10,10 +10,12 @@ type Formats = Partial<Record<'gif' | 'webp' | 'png', ImageFormat>>;
 
 interface ButtonMeta {
   title: string;
-  href: string;
+  href?: string;
+  order?: number;
 }
 
-type Button = { formats: Formats } & ButtonMeta;
+type Button = { formats: Formats } & Required<Pick<ButtonMeta, 'title' | 'order'>> &
+  Omit<ButtonMeta, 'order'>; // fucking travesty
 
 const imageImports = import.meta.glob('/public/buttons/*.{gif,webp,png}', {
   eager: true,
@@ -44,16 +46,20 @@ for (const [path, src] of Object.entries(imageImports)) {
 const buttons: Button[] = Object.entries(groupedImages).map(([base, formats]) => {
   const meta = metaImports[`/public/buttons/${base}.json`] ?? {
     title: '',
-    href: '#',
   };
-  return { formats, ...meta };
+
+  const order = meta.order ?? 100;
+
+  return { formats, ...meta, order };
 });
+
+buttons.sort((a, b) => (a.order < b.order ? -1 : 0));
 ---
 
 {
   buttons.map(({ formats, href, title }) => (
     <a
-      href={href}
+      href={href && href}
       title={title}
       class="flex justify-center transition-all hover:rotate-x-10 hover:rotate-y-10 hover:scale-120"
     >
@@ -61,7 +67,6 @@ const buttons: Button[] = Object.entries(groupedImages).map(([base, formats]) =>
         <picture>
           {formats.gif && <source srcset={formats.gif.src} type="image/gif" />}
           {formats.webp && <source srcset={formats.webp.src} type="image/webp" />}
-          {/* probably won't ever use png but just in case */}
           {formats.png && <source srcset={formats.png.src} type="image/png" />}
           <img alt={title} width="88" height="31" />
         </picture>

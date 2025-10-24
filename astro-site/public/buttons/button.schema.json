@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Button",
   "type": "object",
-  "required": ["title", "href"],
+  "required": ["title"],
   "additionalProperties": false,
   "properties": {
     "title": {
@@ -11,6 +11,9 @@
     "href": {
       "type": "string",
       "format": "uri"
+    },
+    "order": {
+      "type": "number"
     }
   }
 }
