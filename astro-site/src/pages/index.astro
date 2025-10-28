@@ -2,12 +2,12 @@
 import colors from 'tailwindcss/colors';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import FancyIcon from '@components/FancyIcon.astro';
-import IconRow from '@components/IconRow.astro';
-import Buttons from '@components/Buttons.astro';
-import Testimonial from '@components/Testimonial.astro';
-import FancySection from '@components/FancySection.astro';
-import BlogPostDisplay from '@components/BlogPostDisplay.astro';
+import FancyIcon from '@lib/ui/FancyIcon.astro';
+import FancyIconRow from '@lib/ui/FancyIconRow.astro';
+import Buttons from '@lib/Buttons.astro';
+import Testimonial from '@lib/ui/Testimonial.astro';
+import FancySection from '@lib/ui/FancySection.astro';
+import BlogPostDisplay from '@lib/blog/BlogPostDisplay.astro';
 
 import type { PostFrontmatter } from 'lib/shared-types';
 
@@ -78,7 +78,7 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
       </div>
     </header>
     <FancySection title="Links to things" id="links">
-      <IconRow>
+      <FancyIconRow>
         <FancyIcon
           title={siDiscord.title}
           hex={'#' + siDiscord.hex}
@@ -136,10 +136,10 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
         >
           <Fragment set:html={siMonkeytype.svg} />
         </FancyIcon>
-      </IconRow>
+      </FancyIconRow>
     </FancySection>
     <FancySection title="10% knowledge of these:" id="languages">
-      <IconRow>
+      <FancyIconRow>
         {
           languagesList.map(({ icon, hex }) => (
             <FancyIcon title={icon.title} hex={hex ? hex : '#' + icon.hex}>
@@ -147,10 +147,10 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
             </FancyIcon>
           ))
         }
-      </IconRow>
+      </FancyIconRow>
     </FancySection>
     <FancySection title="3% knowledge of these:" subtitle="(or want to learn)" id="learning">
-      <IconRow>
+      <FancyIconRow>
         {
           learningList.map(({ icon, hex }) => (
             <FancyIcon title={icon.title} hex={hex ? hex : '#' + icon.hex}>
@@ -158,10 +158,12 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
             </FancyIcon>
           ))
         }
-      </IconRow>
+      </FancyIconRow>
     </FancySection>
     <FancySection title="Blog posts" id="blog-posts">
-      {posts.slice(0, 3).map((post) => <BlogPostDisplay post={post} />)}
+      <div class="grid grid-cols-1 gap-4">
+        {posts.slice(0, 3).map((post) => <BlogPostDisplay post={post} />)}
+      </div>
       <a href="/blog" class="block w-fit ml-auto italic pt-2"> see all posts &gt </a>
     </FancySection>
     <FancySection title="clicky clicky buttons" id="buttons">

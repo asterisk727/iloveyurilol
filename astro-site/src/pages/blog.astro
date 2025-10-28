@@ -1,7 +1,7 @@
 ---
 import BaseLayout from 'layouts/BaseLayout.astro';
-import BlogPostDisplay from '@components/BlogPostDisplay.astro';
-import FancySection from '@components/FancySection.astro';
+import BlogPostDisplay from '@lib/blog/BlogPostDisplay.astro';
+import FancySection from '@lib/ui/FancySection.astro';
 
 import type { PostFrontmatter } from 'lib/shared-types';
 
@@ -11,8 +11,13 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
 <BaseLayout>
   <div class="p-4">
     <FancySection title="Blog Posts" />
+    <div class="flex gap-4 pb-4">
+      <a href="/"> &lt go home </a>
+    </div>
     <div class="grid grid-cols-1">
-      {posts.map((post) => <BlogPostDisplay post={post} />)}
+      <div class="grid grid-cols-1 gap-4">
+        {posts.map((post) => <BlogPostDisplay post={post} />)}
+      </div>
     </div>
   </div>
 </BaseLayout>

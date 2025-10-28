@@ -7,7 +7,7 @@ interface Props {
   description?: string;
 }
 
-const { title = 'TESTTITLE', description = 'TESTDESCRIPTION' } = Astro.props;
+const { title = 'i love yuri', description = "asterisk's personal website" } = Astro.props;
 ---
 
 <!doctype html>
@@ -68,12 +68,19 @@ const { title = 'TESTTITLE', description = 'TESTDESCRIPTION' } = Astro.props;
     >
       <slot />
 
-      <footer class="p-4 bg-slate-800 opacity-100 rounded-b-2xl">
-        <h3 class="text-slate-50">
+      <footer
+        class="p-4 bg-slate-800 opacity-100 rounded-t-2xl min-[600px]:rounded-b-2xl min-[600px]:rounded-t-none"
+      >
+        <h3 class="text-slate-50 leading-6.5">
           <a href="https://iloveyuri.lol" class="text-slate-50 no-underline uppercase"
             >iloveyuri.lol</a
           >
           - asterisk's funny little website
+          <br />
+          <nav class="inline-flex gap-4 pb-3">
+            <a href="/">/top</a>
+            <a href="/blog">/blog</a>
+          </nav>
         </h3>
         <p class="text-slate-50">
           Inspired by <a href="https://split.pet">split.pet</a>
