@@ -12,6 +12,7 @@
     "@astrojs/mdx": "^4.3.6",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.5",
+    "katex": "^0.16.25",
     "simple-icons": "^15.14.0",
     "wrangler": "^4.38.0"
   },
