@@ -212,3 +212,18 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
     <div class="pb-4"></div>
   </div>
 </BaseLayout>
+
+<style is:global>
+  @reference "../styles/global.css";
+
+  #akasha-icon {
+    transform: rotate(-30deg);
+    transform-origin: center;
+    width: 32px;
+    height: 32px;
+  }
+
+  #aquadx-icon {
+    @apply grayscale brightness-200 hover:grayscale-0 hover:brightness-100;
+  }
+</style>

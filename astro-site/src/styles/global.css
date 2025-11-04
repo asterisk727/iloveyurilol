@@ -24,14 +24,3 @@
     @apply underline transition-colors duration-150 text-slate-300 hover:text-slate-100;
   }
 }
-
-#akasha-icon {
-  transform: rotate(-30deg);
-  transform-origin: center;
-  width: 32px;
-  height: 32px;
-}
-
-#aquadx-icon {
-  @apply grayscale brightness-200 hover:grayscale-0 hover:brightness-100
-}

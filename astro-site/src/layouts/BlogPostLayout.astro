@@ -18,8 +18,16 @@ const { frontmatter } = Astro.props;
         <a href="/blog"> &lt see all blog posts </a>
       </div>
     </header>
-    <div class="indent-6">
+    <article class="blogpost">
       <slot />
-    </div>
+    </article>
   </div>
 </BaseLayout>
+
+<style is:global>
+  @reference "../styles/global.css";
+
+  .blogpost p {
+    @apply indent-6;
+  }
+</style>
