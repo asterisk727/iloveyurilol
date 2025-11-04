@@ -1,0 +1,17 @@
+---
+export interface Props {
+  src: string;
+  caption?: string;
+}
+
+const { src, caption } = Astro.props;
+
+const basePath = Astro.url.pathname.replace(/\/$/, '');
+const postSlug = basePath.split('/').pop();
+const imagePath = `/blog/${postSlug}/${src}`;
+---
+
+<figure class="mx-8 my-4">
+  <img src={imagePath} class="mx-auto max-h-48 rounded-2xl border-3 border-slate-600" />
+  <h4 class="text-center mt-2">{caption && <figcaption>{caption}</figcaption>}</h4>
+</figure>
