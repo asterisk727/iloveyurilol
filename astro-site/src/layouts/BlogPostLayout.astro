@@ -18,7 +18,8 @@ const { frontmatter } = Astro.props;
         <a href="/blog"> &lt see all blog posts </a>
       </div>
     </header>
-
-    <slot />
+    <div class="indent-6">
+      <slot />
+    </div>
   </div>
 </BaseLayout>
