@@ -1,21 +1,166 @@
 ---
 layout: ../../layouts/BlogPostLayout.astro
 title: An Optimization Algorithm for Artifact XP Gain in Egg, Inc.
-description: a seemingly simple problem turned out to be NP-Hard
+description: a seemingly simple problem that turned out to be NP-Hard, sort of
 date: '2025-11-04'
 ---
 
 import FancySection from '@lib/ui/FancySection.astro'
 import BlogPostImage from '@lib/blog/BlogPostImage.astro'
+import BlogPostBlock from '@lib/blog/BlogPostBlock.astro'
+import KatexExpression from '@lib/ui/KatexExpression.astro'
 
-<FancySection title="Introduction: Problemata" id="intro"/>
+<FancySection title="Introduction: Problema" id="intro"/>
 
-Welcome to Egg Inc, a stupidly simple mobile game where basically the entire endgame just grinding *(read as: waiting)* for those shiny shiny T4L artifacts.
+Welcome to Egg, Inc, a stupidly simple mobile game where basically the entire endgame just grinding *(read as: waiting)* for those shiny T4L artifacts.
 
-Unless you're content with a T4L metronome as your best leggy arti the best way to reach True Endgame Player™ status is to craft for those artifacts, but we all know the rates for those are abysmal unless you craft like 200 of an artifact.
+Unless you're content with a T4L metronome as your best leggy arti the only way to reach True Endgame Player™ status is to craft for those artifacts, but we all know the rates for those are abysmal unless you craft like 200 of them.
 
-Fortuantely, your crafting level can help turn those abysmal rates into slightly less abysmal rates, except by the time you reach level 30 for that sweet sweet 10x legendary chance you probably already have most of the T4Ls you need: a true chicken and egg problem.
+Fortuantely, your crafting level can help turn those abysmal rates into slightly less abysmal rates, except by the time you reach level 30 for that sweet 10x legendary chance you probably already have most of the T4Ls you need: a true chicken and egg problem.
 
 <BlogPostImage src="artifact-xp.png" caption="years into the game and still only level 24!" />
 
-Some normal body text that appears after the image.
+Thus, it is natural to want to maximize one's XP gain, especially since artifacts can take months if not years to farm.
+
+Fortunately, there is already some community work done on this topic. Take for example, this handy chart that shows how to best spend your precious crafting ingredients to maximize XP return.
+
+<BlogPostImage src="xp-per-ingredient.webp" caption="source unknown; if you do know, please let me know so I can properly credit whoever made this!" />
+
+Unfortunately, simply comparing XP per ingredient can be misleading when we're trying to maximize our total XP gain.
+This chart does not *(and can not)* take into account all the *future crafts* that become possible through crafting a certain artifact.
+Additionally, it does not show XP values for artifacts that can then be used to craft multiple different artifacts. 
+Case in point: The T3 BoB can be used to craft the T4 BoB, SiaB, or Feather, of which the latter two enable new crafts of their own.
+Which is best? Who knows!
+
+At this point, it's clear the problem of maximizing XP gain (say from a certain player's inventory) is a lot more complicated than it may seem at first sight.
+Let's see how we can solve it. 
+
+<FancySection title="Formalization: Algorithms" id="algorithms" />
+
+As a massive stinking nerd, I first attempted to formalize this problem as it may be seen in the competitive programming field:
+
+<BlogPostBlock title="Problem Statement">
+  Bessie the cow has discovered $n$ $(5 \lt n \lt 200)$ different artifacts, numbered $1$ through $n$.
+  Some artifacts can be crafted from others, earning experience points (XP) in the process. \
+  For each artifact $i$:
+
+  - There is a recipe that consumes some number of other artifacts to craft one unit of artifact $i$.
+  - The recipe is defined by integers $m_{i, 1\ldots n}$, where $m_{i, j}$ is the number of artifacts of type $j$ required to craft one unit of artifact $i$.
+  - Crafting one unit of artifact $i$ grants $c_i$ XP.
+  - You may assume $m_{i, i} = 0$ for all $i$ (no self-recursive recipes).
+  - If all values of $m_{i, j}$ are $0$, then artifact $i$ cannot be crafted — it is a base artifact.
+  
+  \
+  Initially, Bessie has $b_i$ units of each artifact $i$. \
+  Whenever she crafts an artifact $i$:
+
+  - She consumes the required ingredients ($m_{i, j}$ of each artifact $j$).
+  - She produces one new artifact $i$.
+  - She gains $c_i$ XP.
+  - Bessie may perform any sequence of valid crafts (in any order) as long as she has enough ingredients for each craft.
+
+  \
+  Determine $a_i$, the number of times Bessie should craft each artifact $i$ in order to maximize the total XP gained $\sum_{i = 1}^{n}a_i c_i$.
+
+  \
+  Constraints:
+  - $5 \lt n \lt 200$
+  - $b_i \lt 10^5$
+  - $c_i \lt 10^{10}$
+  - $m_{i, j} \lt 10^5$
+
+  \
+  Input Format:
+  - The first line contains $n$
+  - The next line contains $n$ integers $b_1,  b_2, \ldots , b_n$
+  - The next line contains $n$ integers $c_1, c_2, \ldots , c_n$
+  - The next $n$ lines contain $n$ integers $b_{i, 1}, b_{i, 2}, \ldots , b_{i, n}$
+  - It is guaranteed that the crafting dependency graph is acyclic.
+
+  \
+  Output Format:
+  - $n$ lines containing $a_i$ on each line
+</ BlogPostBlock>
+
+<FancySection title="Solution (?): Dynamic Programming" id="solution-dp" />
+
+We can think of our problem as a DAG (directed acyclic graph).
+A greedy algorithm will obviously fail to find the global optimium in our case so it seems logical to turn to DP instead.
+
+Here's an implementation that probably works. An implementation or verification of this solution is left as an exercise for the reader.
+<BlogPostBlock title="DP-based Algorithm">
+
+</BlogPostBlock>
+
+Unfortunately, this solution is *not* practical for our problem.
+By inspection we have a time complexity of $O(e^{n^2}*log(n))$ which will *not* scale well for our constraint of $0 \lt n \lt 200$
+(I believe the actual $n$ for Egg, Inc. is $132$, which is still too large to use DP).
+
+<FancySection title="Solution (??): A Maximum Flow Approach" id="solution-max-flow" />
+
+Maximum (or minimum, depending on the sign of the cost, which doesn't matter for our purposes) flow is another intuitive way to approach the problem.
+Given that our recipes are acyclic and each ingredient has exactly one recipe, visualizing them as a forest of directed trees (a polyforest) can help motivate this.
+
+Here is a flow network $N$ that we can construct to solve this problem:
+<BlogPostBlock title="Min/Max Cost Flow Network">
+  - A source node $S$
+  - A sink node $T$
+  - Artifact nodes $A_1, A_2, \ldots, A_n$
+  - Recipe nodes $R_1, R_2, \ldots, R_n$
+  - Supply edges $S \rightarrow A_i$ with capacity $b_i$ and cost $0$ to represent our initial supply of artifacts
+  - Ingredient edges $A_j \rightarrow R_i$ with capacity $\infty$ and cost $0$ to represent $m_{i, j}$ or the ingredient inputs of a recipe
+  - Output edges $R_i \rightarrow A_i$ with capacity $\infty$ and cost $\pm c_i$ to represent one craft of recipe $m_i$
+  - Sinking edges $A_i \rightarrow T$ with capacity $\infty$ and cost $0$ as is tradition.
+
+  <br />
+
+  Having recipes be their own nodes allows us to use flow conservation rules there to enforce proper integer multiples when crafting.
+
+  If our output edges have positive cost, then the total XP gained is the total cost and running a max-cost flow algorithm gives us the solution.
+  If our output edges have negative cost, then the total XP gained is negative the total cost and running a min-cost flow algorithm will give us the solution.
+</BlogPostBlock>
+
+
+Unfortunately, most min/max flow libraries don't allow these custom flow conservation rules at nodes.
+If we really want to, we can replicate this behavior by expanding each craft into a new subgraph.
+However, at that point, the time complexity probably really sucks anyways and I really don't want to (and probably can't) write a maxflow algorithm from scratch.
+So, back to the drawing board.
+
+<FancySection title="Solution (!?): Linear Programming" id="solution-lp" />
+
+At first it is tempting to use a linear programming based solution.
+Since we are guaranteed that artifact crafts are acyclic, we can represent the amount of artifacts available and consumed as linear functions of the given constants and $a_i$.
+
+Here is an attempt at such:
+
+<BlogPostBlock title="LP Problem Statement">
+  - $n$ is the number of different artifacts.
+  - <KatexExpression> $a \in \mathbb{R}^n$ </KatexExpression> is our decision vector
+  - <KatexExpression> $b \in \mathbb{R}^n$ </KatexExpression> is given
+  - <KatexExpression> $c \in \mathbb{R}^n$ </KatexExpression> is given
+  - <KatexExpression> $M \in \mathbb{R}^{n^{2}}$ </KatexExpression> is also given
+
+  \
+  Our constraints are: \
+  $\sum_{i = 0}^{n} M_{i, j} a_i - a_j \le b_j$ and <KatexExpression> $a \in \mathbb{Z}^n_{\ge 0}$ </KatexExpression> \
+  \
+  Of which we can rewrite the first one as: \
+  $$(M^\intercal - I_n)a \le b$$ \
+  where $I_n$ is the $n \times n$ identity matrix \
+  \
+  And our objective is to maximize: \
+  $z=c^\intercal a$
+</BlogPostBlock>
+
+Linear programming is probably the most straightforward way to approach our problem: it fits very neatly into the general problem and there are many libraries that can solve LP problems.
+
+However, ours is actually a special case of the LP problem. LP allows for elements of our decision vector to be in the set of all reals.
+Unfrotunately, that means that we can end up (will most likely end up with) with decimal solutions, even though we aren't able to do decimal crafts in-game.
+Additionally, simply rounding down doesn't work either since that will affect future crafts that are dependant on the ingredient we just rounded down for.
+
+Since integer linear programming (also just called integer programming or IP) is [NP-hard](https://en.wikipedia.org/wiki/Integer_programming#Proof_of_NP-hardness), so we can try to do better and find a polynomial-time solution, or at the very least, a heuristic to find a decently good local optimum.
+Looking back, this probably explains why our two previous attempts were destined to fail.
+
+<FancySection title="Solution (!): Creative Approaches to IP" id="solution-ip" />
+
+<FancySection title="Conclusion: Applications" id="applications" />
