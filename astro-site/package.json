@@ -6,12 +6,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "gen:types": "json2ts -i src/lib/schemas/ -o src/lib/types/"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.6",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "^5.13.5",
+    "json-schema-to-typescript": "^15.0.4",
     "katex": "^0.16.25",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
