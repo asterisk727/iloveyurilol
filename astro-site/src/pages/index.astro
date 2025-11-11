@@ -2,14 +2,14 @@
 import colors from 'tailwindcss/colors';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import FancyIcon from '@lib/ui/FancyIcon.astro';
-import FancyIconRow from '@lib/ui/FancyIconRow.astro';
-import Buttons from '@lib/Buttons.astro';
-import Testimonial from '@lib/ui/Testimonial.astro';
-import FancySection from '@lib/ui/FancySection.astro';
-import BlogPostDisplay from '@lib/blog/BlogPostDisplay.astro';
+import FancyIcon from '@components/ui/FancyIcon.astro';
+import FancyIconRow from '@components/ui/FancyIconRow.astro';
+import Buttons from '@components/Buttons.astro';
+import Testimonial from '@components/ui/Testimonial.astro';
+import FancySection from '@components/ui/FancySection.astro';
+import BlogPostDisplay from '@components/blog/BlogPostDisplay.astro';
 
-import type { PostFrontmatter } from 'lib/shared-types';
+import type { PostFrontmatter } from '@lib/shared-types';
 
 import {
   siDiscord,
@@ -30,7 +30,7 @@ import {
   siRust,
   siPython,
 } from 'simple-icons';
-import akashaIcon from '../assets/icons/akasha.svg?raw';
+import akashaIcon from '@/assets/icons/akasha.svg?raw';
 
 const languagesList = [
   { icon: siJavascript },

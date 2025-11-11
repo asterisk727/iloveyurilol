@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import path from 'node:path';
 
 import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
@@ -9,7 +10,14 @@ import rehypeKatex from 'rehype-katex';
 
 export default defineConfig({
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    resolve: {
+      alias: {
+        '@components': path.resolve('./src/components'),
+        '@lib': path.resolve('./src/lib'),
+        '@': path.resolve('./src'),
+      },
+    },
   },
   
   markdown: {
