@@ -1,3 +1,106 @@
 ---
+import { DirectedGraph } from 'graphology';
+import { Sigma } from 'sigma';
 
+import raw from '@/assets/util/ei-datavis/eiafx-data.json';
+import type { Family } from '@lib/types/eiafx.schema';
+
+export interface artifactNode {
+  afx: {
+    afxId: number;
+    afxTier: number;
+  };
+  name: String;
+  readableName: String;
+  iconFile: String;
+  xp?: number;
+}
+
+export interface artifactEdge {
+  cost: number;
+  xp: number;
+}
+
+function makeKey(afxId: number, afxTier: number): string {
+  return `${afxId}-${afxTier}`;
+}
+
+function layoutForest(graph: DirectedGraph, xSpacing = 200, ySpacing = 100) {
+  const roots = graph.filterNodes((n) => graph.inDegree(n) === 0);
+  let currentX = 0;
+
+  for (const root of roots) {
+    layoutTree(graph, root, currentX, 0, xSpacing, ySpacing);
+    currentX += xSpacing * 4;
+  }
+}
+
+function layoutTree(
+  graph: DirectedGraph,
+  node: string,
+  baseX: number,
+  baseY: number,
+  xSpacing: number,
+  ySpacing: number,
+  depth = 0
+) {
+  const children = graph.outboundNeighbors(node);
+  const x = baseX + depth * xSpacing;
+  const y = baseY + (children.length ? ((children.length - 1) * ySpacing) / 2 : 0);
+  graph.setNodeAttribute(node, 'x', x);
+  graph.setNodeAttribute(node, 'y', y);
+
+  let childY = baseY;
+  for (const child of children) {
+    layoutTree(graph, child, baseX, childY, xSpacing, ySpacing, depth + 1);
+    childY += ySpacing;
+  }
+}
+
+const data = raw.artifact_families as Family[];
+let graph = new DirectedGraph<artifactNode, artifactEdge>();
+
+for (const family of data) {
+  for (const tier of family.tiers) {
+    graph.addNode(makeKey(tier.afx_id, tier.afx_level), {
+      afx: {
+        afxId: tier.afx_id,
+        afxTier: tier.afx_level,
+      },
+      name: tier.id,
+      readableName: tier.name,
+      iconFile: tier.icon_filename,
+      xp: tier.crafting_xp,
+    } satisfies artifactNode);
+
+    if (tier.recipe) {
+      for (const ingredient of tier.recipe.ingredients) {
+        graph.addEdge(
+          makeKey(ingredient.afx_id, ingredient.afx_level),
+          makeKey(tier.afx_id, tier.afx_level),
+          {
+            cost: ingredient.count,
+            xp: tier.crafting_xp!,
+          } satisfies artifactEdge
+        );
+      }
+    }
+  }
+}
+
+layoutForest(graph);
+
+const sigmaInstance = new Sigma(graph, document.getElementById('sigma-graph')!);
 ---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quick Sigma.js Example</title>
+  </head>
+  <body style="background: lightgrey">
+    <div id="sigma-graph" style="width: 800px; height: 600px; background: white"></div>
+  </body>
+  <script is:inline></script>
+</html>
