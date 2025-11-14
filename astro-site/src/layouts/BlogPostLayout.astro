@@ -9,6 +9,14 @@ const { frontmatter } = Astro.props;
   <div class="p-4">
     <header>
       <hgroup>
+        {
+          frontmatter.hidden && (
+            <h1 class="text-red-500 mb-4 text-center">
+              This is a hidden post. If you are seeing this, it was probably not intended to be
+              published yet. Proceed with caution!
+            </h1>
+          )
+        }
         <h1>{frontmatter.title}</h1>
         <h3>{frontmatter.description && frontmatter.description}</h3>
         <h4>{frontmatter.date}</h4>

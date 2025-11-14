@@ -52,6 +52,7 @@ const learningList = [
 const { title, description } = Astro.props;
 
 const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
+const isBeta = true; //TODO: do better pls. i wanted to go to sleep but this is so stupid just use an .env or sm ahh
 ---
 
 <BaseLayout>
@@ -77,6 +78,17 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
         </hgroup>
       </div>
     </header>
+    {
+      isBeta && (
+        <div class="flex flex-nowrap justify-center text-2xl text-center mt-4 mx-2">
+          <span>🚧</span>
+          <h3 class="text-red-300">
+            This site is still under construction. Check back soon for more!
+          </h3>
+          <span>🚧</span>
+        </div>
+      )
+    }
     <FancySection title="Links to things" id="links">
       <FancyIconRow>
         <FancyIcon
@@ -162,7 +174,17 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
     </FancySection>
     <FancySection title="Blog posts" id="blog-posts">
       <div class="grid grid-cols-1 gap-4">
-        {posts.slice(0, 3).map((post) => <BlogPostDisplay post={post} />)}
+        {
+          posts
+            .filter((post) => !post.frontmatter.hidden)
+            .slice(0, 3)
+            .map((post) => <BlogPostDisplay post={post} />)
+        }
+        {
+          posts.filter((post) => !post.frontmatter.hidden).length == 0 && (
+            <h3 class="text-center">There's nothing here... yet</h3>
+          )
+        }
       </div>
       <a href="/blog" class="block w-fit ml-auto italic pt-2"> see all posts &gt </a>
     </FancySection>

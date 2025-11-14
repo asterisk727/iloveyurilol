@@ -16,7 +16,12 @@ const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
     </div>
     <div class="grid grid-cols-1">
       <div class="grid grid-cols-1 gap-4">
-        {posts.map((post) => <BlogPostDisplay post={post} />)}
+        {posts.map((post) => !post.frontmatter.hidden && <BlogPostDisplay post={post} />)}
+        {
+          posts.filter((post) => !post.frontmatter.hidden).length == 0 && (
+            <h3>There's nothing here... yet</h3>
+          )
+        }
       </div>
     </div>
   </div>
