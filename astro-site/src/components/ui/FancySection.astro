@@ -1,0 +1,16 @@
+---
+export interface Props {
+  title: string;
+  subtitle?: string;
+  id?: string;
+}
+
+const { title, subtitle, id } = Astro.props;
+---
+
+<section id={id && id}>
+  <h3 class="text-center font-bold uppercase pt-4">{title}</h3>
+  <h4 class="text-center pb-2">{subtitle && subtitle}</h4>
+  <hr class="mx-auto border-slate-500 border-1 w-[10%] mb-4" />
+  <slot />
+</section>

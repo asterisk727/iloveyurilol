@@ -1,0 +1,13 @@
+---
+const { post } = Astro.props;
+---
+
+<div
+  class="p-4 bg-slate-800 hover:bg-slate-700 text-slate-100 rounded-2xl border-2 border-slate-800 hover:border-slate-300 transition-all duration-200"
+>
+  <a href={post.url} class="no-underline">
+    <h3>{post.frontmatter.title}</h3>
+    <h4>{post.frontmatter.description}</h4>
+    <h4 class="text-right pt-1">{post.frontmatter.date}</h4>
+  </a>
+</div>

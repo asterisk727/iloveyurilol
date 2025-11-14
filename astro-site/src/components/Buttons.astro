@@ -1,0 +1,78 @@
+---
+interface ImageFormat {
+  src: string;
+  width: number;
+  height: number;
+  format: string;
+}
+
+type Formats = Partial<Record<'gif' | 'webp' | 'png', ImageFormat>>;
+
+interface ButtonMeta {
+  title: string;
+  href?: string;
+  order?: number;
+}
+
+type Button = { formats: Formats } & Required<Pick<ButtonMeta, 'title' | 'order'>> &
+  Omit<ButtonMeta, 'order'>; // fucking travesty
+
+const imageImports = import.meta.glob('/public/buttons/*.{gif,webp,png}', {
+  eager: true,
+  import: 'default',
+}) as Record<string, ImageFormat>;
+const metaImports = import.meta.glob('/public/buttons/*.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, ButtonMeta>;
+
+function getBaseName(path: string) {
+  const fileName = path.split('/').pop() ?? '';
+  return fileName.split('.')[0];
+}
+
+function getExtention(path: string) {
+  return (path.split('.').pop() ?? '').toLowerCase();
+}
+
+const groupedImages: Record<string, Formats> = {};
+for (const [path, src] of Object.entries(imageImports)) {
+  const base = getBaseName(path);
+  const ext = getExtention(path) as 'gif' | 'webp' | 'png'; // gaslighting :)
+  groupedImages[base] ??= {};
+  groupedImages[base][ext] = src;
+}
+
+const buttons: Button[] = Object.entries(groupedImages).map(([base, formats]) => {
+  const meta = metaImports[`/public/buttons/${base}.json`] ?? {
+    title: '',
+  };
+
+  const order = meta.order ?? 100;
+
+  return { formats, ...meta, order };
+});
+
+buttons.sort((a, b) => (a.order < b.order ? -1 : 0));
+---
+
+{
+  buttons.map(({ formats, href, title }) => (
+    <a
+      href={href && href}
+      title={title}
+      class="flex justify-center transition-all hover:rotate-x-10 hover:rotate-y-10 hover:scale-120"
+    >
+      {Object.keys(formats).length > 1 ? (
+        <picture>
+          {formats.gif && <source srcset={formats.gif.src} type="image/gif" />}
+          {formats.webp && <source srcset={formats.webp.src} type="image/webp" />}
+          {formats.png && <source srcset={formats.png.src} type="image/png" />}
+          <img alt={title} width="88" height="31" />
+        </picture>
+      ) : (
+        <img src={Object.values(formats)[0].src} alt={title} width="88" height="31" />
+      )}
+    </a>
+  ))
+}

@@ -1,0 +1,38 @@
+---
+export interface Props {
+  review: {
+    stars: number;
+    author: string;
+    content: string;
+  };
+}
+
+const { review } = Astro.props;
+---
+
+<div class="p-4 bg-slate-800 text-slate-100 rounded-2xl">
+  <span class="inline-flex gap-1">
+    {
+      Array.from({ length: review.stars }).map(() => (
+        <span
+          class="select-none"
+          style="color:transparent; text-shadow: 0 0 0 var(--color-yellow-400)"
+        >
+          ⭐
+        </span>
+      ))
+    }
+    {
+      Array.from({ length: 5 - review.stars }).map(() => (
+        <span
+          class="select-none"
+          style="color:transparent; text-shadow: 0 0 0 var(--color-gray-400)"
+        >
+          ⭐
+        </span>
+      ))
+    }
+  </span>
+  <p class="text-slate-50">{review.content}</p>
+  <h4 class="text-right">{`- ${review.author}`}</h4>
+</div>

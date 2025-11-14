@@ -1,0 +1,8 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["public/buttons/*.json"],
+      "url": "./public/buttons/button.schema.json"
+    }
+  ]
+}

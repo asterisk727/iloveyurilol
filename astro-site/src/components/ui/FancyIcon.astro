@@ -1,0 +1,32 @@
+---
+export interface Props {
+  title: string;
+  hex?: string;
+  url?: string;
+  account?: string;
+  styleID?: string;
+}
+
+const { title, hex, url, account, styleID } = Astro.props;
+---
+
+<li class="relative group">
+  {/* stupid fucking workaround */}
+  <a
+    href={url && url}
+    class={'flex items-center justify-center w-7 h-7 transition-all duration-200 fill-current group-hover:[color:var(--hover-color)]'}
+    style={hex && `--hover-color: ${hex}`}
+    id={styleID && styleID}
+  >
+    <slot />
+  </a>
+
+  <span
+    class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2
+          px-2 py-1 rounded-md text-sm text-white bg-slate-800
+          opacity-0 group-hover:opacity-100 group-focus-within:opacity-100
+          transition-opacity duration-200 pointer-events-none whitespace-nowrap"
+  >
+    {title}{account && ` - ${account}`}
+  </span>
+</li>

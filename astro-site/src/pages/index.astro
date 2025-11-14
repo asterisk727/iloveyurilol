@@ -1,16 +1,251 @@
 ---
+import colors from 'tailwindcss/colors';
 
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FancyIcon from '@lib/ui/FancyIcon.astro';
+import FancyIconRow from '@lib/ui/FancyIconRow.astro';
+import Buttons from '@lib/Buttons.astro';
+import Testimonial from '@lib/ui/Testimonial.astro';
+import FancySection from '@lib/ui/FancySection.astro';
+import BlogPostDisplay from '@lib/blog/BlogPostDisplay.astro';
+
+import type { PostFrontmatter } from 'lib/shared-types';
+
+import {
+  siDiscord,
+  siGithub,
+  siLastdotfm,
+  siSteam,
+  siMonkeytype,
+  siAstro,
+  siSvelte,
+  siJavascript,
+  siTypescript,
+  siCplusplus,
+  siSqlite,
+  siGit,
+  siBun,
+  siNodedotjs,
+  siKotlin,
+  siRust,
+  siPython,
+} from 'simple-icons';
+import akashaIcon from '../assets/icons/akasha.svg?raw';
+
+const languagesList = [
+  { icon: siJavascript },
+  { icon: siTypescript },
+  { icon: siCplusplus },
+  { icon: siSqlite, hex: '#5cb2e4' },
+  { icon: siAstro },
+  { icon: siSvelte },
+  { icon: siGit },
+];
+const learningList = [
+  { icon: siKotlin },
+  { icon: siRust, hex: '#ffc832' },
+  { icon: siPython },
+  { icon: siBun, hex: '#fbf0df' },
+  { icon: siNodedotjs },
+];
+
+const { title, description } = Astro.props;
+
+const posts = await Astro.glob<PostFrontmatter>('./blog/*.mdx');
+const isBeta = true; //TODO: do better pls. i wanted to go to sleep but this is so stupid just use an .env or sm ahh
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <div class="pl-4 pr-4 pb-4 relative">
+    <header>
+      <div class="flex items-start gap-4">
+        <picture class="relative -mt-16 shrink-0">
+          <source srcset="pfp.png" type="img/png" />
+          <img
+            src="/pfp/pfp-small.png"
+            width="128"
+            height="128"
+            class="rounded-full border-4 border-slate-600"
+            alt="asterisk's profile picture"
+          />
+        </picture>
+        <hgroup class="pt-4">
+          <div class="flex flex-wrap items-baseline gap-x-4">
+            <h1>Hi, I'm Asterisk.</h1>
+            <h4>a.k.a. crxmsxn</h4>
+          </div>
+          <h2>multifacted nerd and annoying person</h2>
+        </hgroup>
+      </div>
+    </header>
+    {
+      isBeta && (
+        <div class="flex flex-nowrap justify-center text-2xl text-center mt-4 mx-2">
+          <span>🚧</span>
+          <h3 class="text-red-300">
+            This site is still under construction. Check back soon for more!
+          </h3>
+          <span>🚧</span>
+        </div>
+      )
+    }
+    <FancySection title="Links to things" id="links">
+      <FancyIconRow>
+        <FancyIcon
+          title={siDiscord.title}
+          hex={'#' + siDiscord.hex}
+          url={'https://discord.com/users/616792599360962583'}
+          account={'asterisk727'}
+        >
+          <Fragment set:html={siDiscord.svg} />
+        </FancyIcon>
+        <FancyIcon
+          title={siGithub.title}
+          hex={'#f0f6fc'}
+          url={'https://github.com/asterisk727'}
+          account={'asterisk727'}
+        >
+          <Fragment set:html={siGithub.svg} />
+        </FancyIcon>
+        <FancyIcon
+          title={siLastdotfm.title}
+          hex={'#' + siLastdotfm.hex}
+          url={'https://www.last.fm/user/crxmsxn'}
+          account={'crxmsxn'}
+        >
+          <Fragment set:html={siLastdotfm.svg} />
+        </FancyIcon>
+        <FancyIcon
+          title={'Akasha Network'}
+          hex={'#395b64'}
+          url={'https://akasha.cv/profile/824368720'}
+          account={'Asterisk'}
+          styleID={'akasha-icon'}
+        >
+          <Fragment set:html={akashaIcon} />
+        </FancyIcon>
+        <FancyIcon
+          title={'AquaDX'}
+          url={'https://aquadx.net/u/crxmsxn'}
+          account={'crxmsxn'}
+          styleID={'aquadx-icon'}
+        >
+          <img src="icons/aquadx.png" />
+        </FancyIcon>
+        <FancyIcon
+          title={siSteam.title}
+          hex={'#1a9fff'}
+          url={'https://steamcommunity.com/id/_asterisk_/'}
+          account={'crxmsxn'}
+        >
+          <Fragment set:html={siSteam.svg} />
+        </FancyIcon>
+        <FancyIcon
+          title={siMonkeytype.title}
+          hex={'#' + siMonkeytype.hex}
+          url={'https://monkeytype.com/profile/asterai'}
+          account={'asterai'}
+        >
+          <Fragment set:html={siMonkeytype.svg} />
+        </FancyIcon>
+      </FancyIconRow>
+    </FancySection>
+    <FancySection title="10% knowledge of these:" id="languages">
+      <FancyIconRow>
+        {
+          languagesList.map(({ icon, hex }) => (
+            <FancyIcon title={icon.title} hex={hex ? hex : '#' + icon.hex}>
+              <Fragment set:html={icon.svg} />
+            </FancyIcon>
+          ))
+        }
+      </FancyIconRow>
+    </FancySection>
+    <FancySection title="3% knowledge of these:" subtitle="(or want to learn)" id="learning">
+      <FancyIconRow>
+        {
+          learningList.map(({ icon, hex }) => (
+            <FancyIcon title={icon.title} hex={hex ? hex : '#' + icon.hex}>
+              <Fragment set:html={icon.svg} />
+            </FancyIcon>
+          ))
+        }
+      </FancyIconRow>
+    </FancySection>
+    <FancySection title="Blog posts" id="blog-posts">
+      <div class="grid grid-cols-1 gap-4">
+        {
+          posts
+            .filter((post) => !post.frontmatter.hidden)
+            .slice(0, 3)
+            .map((post) => <BlogPostDisplay post={post} />)
+        }
+        {
+          posts.filter((post) => !post.frontmatter.hidden).length == 0 && (
+            <h3 class="text-center">There's nothing here... yet</h3>
+          )
+        }
+      </div>
+      <a href="/blog" class="block w-fit ml-auto italic pt-2"> see all posts &gt </a>
+    </FancySection>
+    <FancySection title="clicky clicky buttons" id="buttons">
+      <div class="mx-auto min-[550px]:w-[80%] pb-4">
+        <div class="grid grid-cols-3 min-[550px]:grid-cols-4 gap-4">
+          <Buttons />
+        </div>
+      </div>
+    </FancySection>
+    <FancySection title="testimonials" id="testimonials">
+      <div class="grid grid-cols-1 gap-4">
+        <Testimonial
+          review={{
+            stars: 1,
+            author: 'sabrina 🥝',
+            content: 'can we kill this guy',
+          }}
+          ;
+        />
+        <Testimonial
+          review={{
+            stars: 1,
+            author: 'MaymayDX',
+            content: "you want me to kill myself don't you",
+          }}
+          ;
+        />
+        <Testimonial
+          review={{
+            stars: 2,
+            author: 'Entrine',
+            content: '[this guy is] a walking ragebaiter ... master baiter',
+          }}
+          ;
+        />
+        <Testimonial
+          review={{
+            stars: 5,
+            author: 'laproliliu',
+            content: "don't die ... you are very cool",
+          }}
+          ;
+        />
+      </div>
+    </FancySection>
+    <div class="pb-4"></div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  @reference "../styles/global.css";
+
+  #akasha-icon {
+    transform: rotate(-30deg);
+    transform-origin: center;
+    width: 32px;
+    height: 32px;
+  }
+
+  #aquadx-icon {
+    @apply grayscale brightness-200 hover:grayscale-0 hover:brightness-100;
+  }
+</style>

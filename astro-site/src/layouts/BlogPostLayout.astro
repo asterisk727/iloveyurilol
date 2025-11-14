@@ -1,0 +1,41 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import 'katex/dist/katex.min.css';
+
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout>
+  <div class="p-4">
+    <header>
+      <hgroup>
+        {
+          frontmatter.hidden && (
+            <h1 class="text-red-500 mb-4 text-center">
+              This is a hidden post. If you are seeing this, it was probably not intended to be
+              published yet. Proceed with caution!
+            </h1>
+          )
+        }
+        <h1>{frontmatter.title}</h1>
+        <h3>{frontmatter.description && frontmatter.description}</h3>
+        <h4>{frontmatter.date}</h4>
+      </hgroup>
+      <div class="flex gap-4 pb-4">
+        <a href="/"> &lt go home </a>
+        <a href="/blog"> &lt see all blog posts </a>
+      </div>
+    </header>
+    <article class="blogpost p-2">
+      <slot />
+    </article>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  @reference "../styles/global.css";
+
+  .blogpost p:not(ul p) {
+    @apply indent-6;
+  }
+</style>
