@@ -27,4 +27,8 @@
   ul {
     @apply pl-4 list-disc
   }
+
+  ol {
+    @apply pl-4 list-decimal
+  }
 }
