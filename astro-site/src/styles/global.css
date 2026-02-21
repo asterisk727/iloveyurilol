@@ -23,8 +23,4 @@
   a {
     @apply underline transition-colors duration-150 text-slate-300 hover:text-slate-100;
   }
-
-  ul {
-    @apply pl-4 list-disc
-  }
 }

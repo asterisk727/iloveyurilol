@@ -1,0 +1,127 @@
+---
+layout: ../../layouts/BlogPostLayout.astro
+title: Diffie-Hellman Key Exchange and the Multiplicative Group mod n
+description: many seemingly pointless hours spent studying group theory finally paying off with an actual practical application 🙏
+date: '2026-02-20'
+hidden: true
+---
+
+import FancySection from '@lib/ui/FancySection.astro'
+import BlogPostImage from '@lib/blog/BlogPostImage.astro'
+import BlogPostBlock from '@lib/blog/BlogPostBlock.astro'
+import KatexExpression from '@lib/ui/KatexExpression.astro'
+
+
+<FancySection title="Foreword" id="foreword"/>
+
+Topics: cryptography, group theory, number theory
+
+<br/ >
+
+This brief-ish blog post is the result of a "Wikipedia rabbit hole" and aims to concisely and witfully explain what I've learned along the way not only for the interested reader but also for myself.
+The target audience is quite narrow; if you have a budding interest in cryptography and or group theory, you may find the contents interesting.
+If you are already knowledgable in either, you may find it overly verbose or elementary.
+With that out of the way, I hope this will be a fun read for you.
+
+<FancySection title="What is Diffie-Hellman?" id="diffie-hellman"/>
+
+Diffie-Hellman (henceforth abbreviated as D-H) key exchange is one of the oldest algorithms for generating symmetric (private) cryptographic keys over public communications.
+The most obvious application is in encrypted communications on the internet, for which it was widely used, although it was largely succeeded by the RSA family of algorithms, which is outside the scope of this inquiry.
+
+Wikipedia already does a good job of illustrating the steps in a D-H implementation; it is slightly reworded below:
+
+<BlogPostBlock title="Diffie-Hellman Implementation">
+  1. Alice and Bob publicly agree to use a modulus $p$ and base $g$.
+  1. Alice chooses a secret integer $a$, then sends Bob $A = g^a \mod p$
+  1. Bob chooses a secret integer $b$, then sends Alice $B = g^b \mod p$
+  1. Alice computes $s = B^a \mod p$
+  1. Bob computes $s = A^b \mod p$
+  1. Alice and Bob now share the secret $s$
+
+  <br/>
+  <h4>[Original Source](https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange)</h4>
+</BlogPostBlock>
+
+There are a couple *key* (haha) realizations that help in understanding this as a secure and efficient key exchange algorithm:
+- Modular multiplication is a commutative operation ($g^a * g^b \equiv g^b * g^a \equiv g^{ab} \ mod \ p$), meaning both Alice and Bob will get the same secret $s$ regardless of the order they exponentiate by $a$ and $b$ in.
+- Modular exponentiation is a [one-way function](https://en.wikipedia.org/wiki/One-way_function) in that computing its result can be computationally "easy" while making it computationally "hard" to find the input for a given image.
+This means that even if the publicly communicated variables $A$ and $B$ are intercepted by a malicious actor, it can be computationally infeasible to recover the secrets $a$, $b$, and thus $s$.
+
+<br/ >
+
+And, that's it to classic flavored D-H!
+However, before using this process practically, there are still a couple more questions for us to ask.
+Most importantly, what choices of the modulus $p$ and exponentiation base $g$ are ideal (secure and efficient)?
+
+<FancySection title="Picking a modulus p" id="picking-mod-p"/>
+
+Unsurprisingly, we can use group theory to further explore the mathematical structure behind modular exponentiation and draw conclusions using it.
+
+Note that the modular exponentiation D-H uses works within the multiplicative group modulo $p$ ($(\Z/p\Z)^*$) which contains all the integers coprime to $p$.
+Also note that for prime choices of $p$, $(\Z/p\Z)^*$ contains every integer smaller than $p$, $|G| = p - 1$, and is cyclic.
+Thus, we're going to want to choose a prime $p$ such that the group has a generator $g$, every element is a power of $g$, and modular exponentiation is well-defined. 
+
+<br/ >
+Recall that our goal is to make it computationally infeasible to deduce $a$ given $A = g^a \ mod \ p$ (don't worry too much about the base yet, more on that later).
+This is also called the [discrete logarithm problem](https://en.wikipedia.org/wiki/Discrete_logarithm).
+
+(One of?) the most efficient algorithm(s) for solving this problem to attack D-H is the Pohlig-Hellman algorithm (we meet again Dr. Hellman).
+Examining the intuition behind it can help us pick a worst case modulus $p$ for this algorithm.
+
+<BlogPostBlock title="Pohlig-Hellman Description">
+  Suppose we have the group $G = (\Z/p\Z)^*$ with $|G| = p - 1 = N$, and $N$ has the factorization $N = q_1^{e_1} \cdot \ldots \cdot q_k^{e_k}$ where $q_i$ are primes.
+
+  Using Lagrange's theorem, we can find cyclic subgroups of $G$ of order $k_i$.
+
+  Importantly, this allows us to divide and conquer:
+
+  Suppose we solve the discrete logarithm problem $k$ times for the much smaller order subgroups, obtaining $a \ mod \ q_i^{e_i}$.
+  By definition, all our $q_i^{e_i}$ are coprime to each other since the $q_i$ are distinct primes.
+  Thus, using the Chinese remainder theorem, we can construct $a \ mod \ N$, which will satisfy $g^a \ mod \ p = A$
+
+  \
+  Note that I am glossing over a LOT of detail here, but the takeaway is such an efficient divide and conquer approach exists.
+  <h4>[Further Reading](https://en.wikipedia.org/wiki/Pohlig%E2%80%93Hellman_algorithm)</h4>
+</BlogPostBlock>
+
+To mitigate this approach, we can pick a prime modulus $p$ such that factors of $N = p - 1$ allow for as few subgroups of coprime order as possible. 
+Luckily for us, there's a whole family of prime numbers with this property, namely those of form $p = 2q + 1$.
+The multiplicative groups modulo $p = 2q + 1$ have order $2q$ and the only subgroups have order $1, 2, q,$ or $2q$.
+
+<br/ >
+
+With the constraint of having $p$ be a prime number of the form $p = 2q + 1$, we can choose one that is "large enough but not too large".
+Choices of $p$ too small will still allow for brute-force attacks especially with precomputation, while choices of $p$ too large becomes punishing for legitimate users as well as calculating modular exponentiation has time complexity $O((log(p))^2 \cdot log(a))$.
+
+(Note that there exist other cases and reasons that can make a particular choice of $p$ bad; they are ommited for brevity and also because my brain too smol to understand all of them)
+
+<FancySection title="Picking a base g" id="picking-base-g"/>
+
+We now know how to pick a suitable modulus $p$.
+How should we choose what base $g$ to use next?
+
+Here, we introduce the concept of primitive roots $\text{mod} \ p$. 
+One way to describe them is that a number $g$ is a primitive root $ mod \ p$ if $\forall \ k$ coprime to $p$, $\exists \ i$ such that $g^i \equiv k \ mod \ p$.
+In other words, $\langle g \rangle = (\Z/p\Z)^*$.
+
+It is easy to see why this is a desirable property.
+Insofar as increasing $p$, while necessary for security, also increases computational bruden, we'd like to make the most use of the possible space of remainders.
+As an extreme example, picking $g = 1$ would defeat the whole purpose of using modular exponentiation to obscure secrets since $\forall \  n, 1^n = 1$.
+
+We can verify that $g$ is a primitive root modulo $p$ by checking if the smallest $k$ such that $g^k \equiv 1 \ mod \ p$ is exactly $|G| = p - 1$.
+
+Unfortunately, there is no convenient formula to compute arbitrary primitive roots, so we must brute-force verify that the order of our presumed generator is correct in all cases.
+However, we can do this more efficiently by noticing that the order of any element in $G$ must divide $|G| = p - 1$.
+Additionally, our convenient choice of $p = 2q + 1$ turns out to be extra convenient as we have a group of even order ($|G| = 2q$) AND if $q$ is also prime, $G$ actually has $q - 1$ unique generators.
+I'm really tired right now so a proof is left as an exercise for the reader I'm pretty sure this is true.
+
+<FancySection title="Conclusion" id="conclusion"/>
+
+Hey, you made it to the end! Thanks for reading.
+
+Unfortunately, there is no satisfying conclusion.
+You can (sort of) pick a prime modulus $p$ such that $p = 2q + 1$, ideally such that $q$ is also prime, and a base $g$ that's a primitive root modulo $p$.
+D-H is outdated but still pretty cool.
+
+<br/ >
+I would put a further reading section here but I'm really really tired now. Bye o/

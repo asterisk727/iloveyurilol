@@ -38,4 +38,12 @@ const { frontmatter } = Astro.props;
   .blogpost p:not(ul p) {
     @apply indent-6;
   }
+
+  .blogpost ul {
+    @apply pl-4 list-disc;
+  }
+
+  .blogpost ol {
+    @apply pl-4 list-decimal;
+  }
 </style>
