@@ -3,7 +3,7 @@ layout: ../../layouts/BlogPostLayout.astro
 title: Diffie-Hellman Key Exchange and the Multiplicative Group mod n
 description: many seemingly pointless hours spent studying group theory finally paying off with an actual practical application 🙏
 date: '2026-02-20'
-hidden: true
+hidden: false
 ---
 
 import FancySection from '@lib/ui/FancySection.astro'
@@ -30,7 +30,7 @@ The most obvious application is in encrypted communications on the internet, for
 
 Wikipedia already does a good job of illustrating the steps in a D-H implementation; it is slightly reworded below:
 
-<BlogPostBlock title="Diffie-Hellman Implementation">
+<BlogPostBlock title="Diffie-Hellman Key Exchange">
   1. Alice and Bob publicly agree to use a modulus $p$ and base $g$.
   1. Alice chooses a secret integer $a$, then sends Bob $A = g^a \mod p$
   1. Bob chooses a secret integer $b$, then sends Alice $B = g^b \mod p$
@@ -68,10 +68,10 @@ This is also called the [discrete logarithm problem](https://en.wikipedia.org/wi
 (One of?) the most efficient algorithm(s) for solving this problem to attack D-H is the Pohlig-Hellman algorithm (we meet again Dr. Hellman).
 Examining the intuition behind it can help us pick a worst case modulus $p$ for this algorithm.
 
-<BlogPostBlock title="Pohlig-Hellman Description">
+<BlogPostBlock title="Pohlig-Hellman Algorithm">
   Suppose we have the group $G = (\Z/p\Z)^*$ with $|G| = p - 1 = N$, and $N$ has the factorization $N = q_1^{e_1} \cdot \ldots \cdot q_k^{e_k}$ where $q_i$ are primes.
 
-  Using Lagrange's theorem, we can find cyclic subgroups of $G$ of order $k_i$.
+  Using Lagrange's theorem, we can find cyclic subgroups of $G$ of order $q_i^{e_i}$.
 
   Importantly, this allows us to divide and conquer:
 
@@ -79,6 +79,7 @@ Examining the intuition behind it can help us pick a worst case modulus $p$ for 
   By definition, all our $q_i^{e_i}$ are coprime to each other since the $q_i$ are distinct primes.
   Thus, using the Chinese remainder theorem, we can construct $a \text{ mod } N$, which will satisfy $g^a \text{ mod } p = A$
 
+  This is related to the fact that $C_n \times C_m \cong C_{nm} \iff \gcd(n, m) = 1$.
   \
   Note that I am glossing over a LOT of detail here, but the takeaway is such an efficient divide and conquer approach exists.
   <h4>[Further Reading](https://en.wikipedia.org/wiki/Pohlig%E2%80%93Hellman_algorithm)</h4>
@@ -101,27 +102,33 @@ We now know how to pick a suitable modulus $p$.
 How should we choose what base $g$ to use next?
 
 Here, we introduce the concept of primitive roots $\text{mod } p$. 
-One way to describe them is that a number $g$ is a primitive root $\text{mod } p$ if $\forall \ k$ coprime to $p$, $\exists \ i$ such that $g^i \equiv k \text{ mod } p$.
-In other words, $\langle g \rangle = (\Z/p\Z)^*$.
+
+<BlogPostBlock title="Definition: Primitive Roots mod p">
+  A number $g$ is a primitive root $\text{mod } p$ if for all $k$ coprime to $p$, there exists $i$ such that $g^i \equiv k \text{ mod } p$.
+
+  In other words, $\langle g \rangle = (\Z/p\Z)^*$.
+</BlogPostBlock>
 
 It is easy to see why this is a desirable property.
 Insofar as increasing $p$, while necessary for security, also increases computational bruden, we'd like to make the most use of the possible space of remainders.
-As an extreme example, picking $g = 1$ would defeat the whole purpose of using modular exponentiation to obscure secrets since $\forall \  n, 1^n = 1$.
+As an extreme example, picking $g = 1$ would defeat the whole purpose of using modular exponentiation to obscure secrets since $1^n = 1$ for any $n$.
 
 We can verify that $g$ is a primitive root modulo $p$ by checking if the smallest $k$ such that $g^k \equiv 1 \text{ mod } p$ is exactly $|G| = p - 1$.
 
+<br/ >
 Unfortunately, there is no convenient formula to compute arbitrary primitive roots, so we must brute-force verify that the order of our presumed generator is correct in all cases.
 However, we can do this more efficiently by noticing that the order of any element in $G$ must divide $|G| = p - 1$.
-Additionally, our convenient choice of $p = 2q + 1$ turns out to be extra convenient as we have a group of even order ($|G| = 2q$) AND if $q$ is also prime, $G$ actually has $q - 1$ unique generators.
-I'm really tired right now so a proof is left as an exercise for the reader I'm pretty sure this is true.
+Additionally, our convenient choice of $p = 2q + 1$ turns out to be extra convenient as we have a group of even order ($|G| = 2q$), and if $q$ is also prime, $G$ actually has $q - 1$ unique generators.
+I'm really tired right now so a proof is left as an exercise for the reader but I'm pretty sure this is true.
+Also, we are likely to find a primitive root very early anyways; see [OEIS A002230](https://oeis.org/A002230) which seems to grow exponentially.
 
 <FancySection title="Conclusion" id="conclusion"/>
 
 Hey, you made it to the end! Thanks for reading.
 
-Unfortunately, there is no satisfying conclusion.
-You can (sort of) pick a prime modulus $p$ such that $p = 2q + 1$, ideally such that $q$ is also prime, and a base $g$ that's a primitive root modulo $p$.
+Unfortunately, there is no incredible conclusion.
+You can (sort of) pick a prime modulus $p$ such that $p = 2q + 1$, ideally such that $q$ is also prime, and a base $g$ that's a primitive root $\text{mod } p$.
 D-H is outdated but still pretty cool.
 
 <br/ >
-I would put a further reading section here but I'm really really tired now. Bye o/
+I would put a further reading section here but I'm really really tired now. Maybe go check out the theory behind RSA. Bye o/
